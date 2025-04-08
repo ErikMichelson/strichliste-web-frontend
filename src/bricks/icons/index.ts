@@ -8,3 +8,5 @@ export * from './search-minus';
 export * from './search-plus';
 export * from './search';
 export * from './icons';
+export * from './night-mode';
+export * from './day-mode';

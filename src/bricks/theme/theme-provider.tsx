@@ -1,32 +1,27 @@
-import * as React from 'react';
-
-import { Button } from '..';
-import { DayModeIcon } from './dayMode';
-import { NightModeIcon } from './nightMode';
-
+import type React from 'react';
+import { createContext, useEffect, useState } from 'react';
 import './theme.css';
 
 type Themes = 'light' | 'dark';
+const THEME_KEY = 'SELECTED_THEME';
 
-type ThemeContextType = {
+interface ThemeContextType {
   theme: Themes;
   toggleTheme(): void;
-};
-const ThemeContext = React.createContext<ThemeContextType>({
+}
+
+const getStoredTheme = () => (localStorage.getItem(THEME_KEY) as Themes) || 'light';
+const setStoredTheme = (theme: Themes) => localStorage.setItem(THEME_KEY, theme);
+
+export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
   toggleTheme: () => {},
 });
 
-const THEME_KEY = 'SELECTED_THEME';
-
-//@ts-expect-error js-ts
-const getStoredTheme = (): Themes => localStorage.getItem(THEME_KEY) || 'light';
-const setStoredTheme = (theme: Themes) => localStorage.setItem(THEME_KEY, theme);
-
 export const ThemeProvider: React.FC = ({ children }) => {
-  const [theme, setTheme] = React.useState<Themes>(getStoredTheme());
+  const [theme, setTheme] = useState<Themes>(getStoredTheme());
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
     } else {
@@ -40,13 +35,4 @@ export const ThemeProvider: React.FC = ({ children }) => {
   };
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
-};
-
-export const ThemeSwitcher: React.FC = (props) => {
-  const { toggleTheme, theme } = React.useContext(ThemeContext);
-  return (
-    <Button onClick={toggleTheme} {...props}>
-      {theme === 'light' ? <DayModeIcon /> : <NightModeIcon />}
-    </Button>
-  );
 };

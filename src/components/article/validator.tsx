@@ -5,12 +5,13 @@ export function useArticleValidator(value: number, userId = ''): boolean {
   const settings = useSettings();
   const userBalance = useUserBalance(userId);
   const boundary = settings.payment.boundary;
+  const lower = typeof boundary.lower === 'boolean' ? 0 : boundary.lower;
 
   if (userId) {
     const newValue = (typeof userBalance === 'boolean' ? 0 : userBalance) - value;
-    return boundary.lower < newValue;
+    return lower < newValue;
   }
-  return value > 0 && value * -1 > boundary.lower;
+  return value > 0 && value * -1 > lower;
 }
 
 interface Props {

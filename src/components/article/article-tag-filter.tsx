@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button } from '../../bricks';
 import { get } from '../../services/api';
 import { Tag } from '../../store/reducers';
@@ -11,17 +11,20 @@ export const ArticleTagFilter: React.FC<{
 }> = ({ onFilterChange }) => {
   const [tags, setTags] = React.useState(cachedTags);
   const [activeTags, setActiveTag] = React.useState<Record<string, string>>({});
-  const toggleTag = (tag: Tag) => {
-    const tagState = activeTags[tag.id];
-    const isActive = Boolean(tagState);
-    if (isActive) {
-      const nextTags = { ...activeTags };
-      delete nextTags[tag.id];
-      setActiveTag(nextTags);
-    } else {
-      setActiveTag({ ...activeTags, [tag.id]: isActive ? '' : tag.tag });
-    }
-  };
+  const toggleTag = useCallback(
+    (tag: Tag) => {
+      const tagState = activeTags[tag.id];
+      const isActive = Boolean(tagState);
+      if (isActive) {
+        const nextTags = { ...activeTags };
+        delete nextTags[tag.id];
+        setActiveTag(nextTags);
+      } else {
+        setActiveTag({ ...activeTags, [tag.id]: isActive ? '' : tag.tag });
+      }
+    },
+    [activeTags]
+  );
 
   React.useEffect(() => {
     onFilterChange(activeTags);
