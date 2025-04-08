@@ -76,18 +76,14 @@ export async function startLoadingUsers(
   dispatch: Dispatch,
   isActive?: boolean
 ): Promise<void> {
-  const params: { deleted?: string; active?: string } = {};
-  params.deleted = 'false';
+  const params = new URLSearchParams({
+    deleted: 'false',
+  });
   if (isActive !== undefined) {
-    params.active = isActive.toString();
+    params.set('active', isActive.toString());
   }
   const promise = get(
-    `user${Object.keys(params).reduce((paramString, param, index) => {
-      const next = `${paramString}${index === 0 ? '?' : '&'}${param}=${
-        params[param]
-      }`;
-      return next;
-    }, '')}`
+    `user?${params.toString()}`
   );
   const data = await errorHandler(dispatch, {
     promise,

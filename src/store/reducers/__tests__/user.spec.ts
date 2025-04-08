@@ -18,9 +18,9 @@ import {
   userDetailsLoaded,
 } from '../user';
 
-jest.mock('../../../services/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
+vi.mock('../../../services/api', () => ({
+  get: vi.fn(),
+  post: vi.fn(),
 }));
 
 describe('user reducer', () => {

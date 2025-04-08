@@ -12,12 +12,12 @@ import {
   startLoadingTransactions,
 } from '../transaction';
 
-jest.mock('../../../services/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
-  restDelete: jest.fn(),
+vi.mock('../../../services/api', () => ({
+  get: vi.fn(),
+  post: vi.fn(),
+  restDelete: vi.fn(),
 }));
-jest.mock('../../../services/sound', () => ({ playCashSound: jest.fn() }));
+vi.mock('../../../services/sound', () => ({ playCashSound: vi.fn() }));
 
 describe('transaction reducer', () => {
   let action: DeepPartial<Action>;

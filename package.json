@@ -3,11 +3,11 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "classnames": "^2.2.6",
     "history": "^5.0.0",
     "howler": "^2.2.0",
     "inter-ui": "^3.15.0",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-infinite-scroll-component": "^5.1.0",
@@ -15,17 +15,18 @@
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
     "recharts": "^1.8.5",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "vite": "^6.2.5",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "tsc && vite build",
     "lint": "eslint --ext .tsx,.ts src/",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "eject": "react-scripts eject",
+    "test": "vitest",
+    "coverage": "vitest run --coverage --watch=false",
     "dedup": "npx yarn-deduplicate yarn.lock"
   },
   "devDependencies": {
@@ -48,6 +49,7 @@
     "@types/redux-mock-store": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
+    "@vitest/coverage-v8": "^3.1.1",
     "awesome-typescript-loader": "^5.2.0",
     "babel-preset-jest": "^26.3.0",
     "eslint-config-prettier": "^6.11.0",
@@ -57,6 +59,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "husky": "^4.3.0",
+    "jsdom": "^26.0.0",
     "lint-staged": "^10.3.0",
     "lodash": "^4.17.20",
     "prettier": "^2.1.2",
@@ -65,7 +68,8 @@
     "source-map-explorer": "^2.5.0",
     "ts-config": "^20.10.0",
     "ts-jest": "~26.3.0",
-    "typescript": "4.0.2"
+    "typescript": "4.0.2",
+    "vitest": "^3.1.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -100,5 +104,6 @@
         "git add"
       ]
     }
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

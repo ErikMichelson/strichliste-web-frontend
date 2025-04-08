@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-jest.mock('../../../services/api', () => ({
-  get: jest.fn(),
-}));
-
 import { DeepPartial } from 'redux';
 import {
   Settings,
@@ -13,10 +9,15 @@ import {
   settingsLoaded,
 } from '..';
 import { Action } from '../..';
-import { get } from '../../../services/api';
+import * as servicesApi from '../../../services/api';
 import { getMockStore } from '../../../spec-configs/mock-store';
 import { AppState } from '../../store';
 import { startLoadingSettings } from '../setting';
+import { vi } from 'vitest';
+
+vi.mock('../../../services/api', () => ({
+  get: vi.fn(),
+}));
 
 describe('settings reducer', () => {
   let action: DeepPartial<Action>;
@@ -42,7 +43,7 @@ describe('settings reducer', () => {
 
 describe('action creators', () => {
   it('startLoadingSettings', async () => {
-    (get as any).mockImplementationOnce(() =>
+    vi.spyOn(servicesApi, 'get').mockImplementationOnce(() =>
       Promise.resolve({ settings: initialState })
     );
 

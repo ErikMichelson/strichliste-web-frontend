@@ -28,7 +28,7 @@ describe('CurrencyInput', () => {
 
   describe('with changes on the input field', () => {
     it('updates state and calls onChange', () => {
-      const changeMock = jest.fn();
+      const changeMock = vi.fn();
       const { getByPlaceholderText } = render(
         <IntlProvider defaultLocale="en">
           <CurrencyInput placeholder="testInput" onChange={changeMock} />
@@ -44,7 +44,7 @@ describe('CurrencyInput', () => {
     it('should handle the visibility of placeholder', () => {
       const { getByPlaceholderText } = render(
         <IntlProvider defaultLocale="en">
-          <CurrencyInput placeholder="the placeholder" onChange={jest.fn()} />
+          <CurrencyInput placeholder="the placeholder" onChange={vi.fn()} />
         </IntlProvider>
       );
       const input = getByPlaceholderText('the placeholder');

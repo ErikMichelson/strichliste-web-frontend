@@ -16,9 +16,9 @@ import {
 } from '../article';
 import { articleDetailResponse } from '../mock';
 
-jest.mock('../../../services/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
+vi.mock('../../../services/api', () => ({
+  get: vi.fn(),
+  post: vi.fn(),
 }));
 
 describe('article reducer', () => {

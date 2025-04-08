@@ -4,7 +4,7 @@ import { LoaderTypes, setGlobalError, setLoader } from '../store/reducers';
 function handleApiError(
   dispatch: Dispatch,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  config: ErrorConfig<any>,
+  config: ErrorConfig<unknown>,
   error: { class: string }
 ): void {
   const [key] = Object.keys(config.errors || {}).filter(key =>
@@ -26,7 +26,7 @@ export interface MaybeResponse {
 
 export interface ErrorConfig<Result> {
   loader?: LoaderTypes;
-  errors?: {};
+  errors?: Record<string, string>;
   defaultError?: string;
   promise: Promise<Result>;
 }

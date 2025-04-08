@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare const process: any;
 
-const API_URL = process.env.REACT_APP_API;
+const API_URL = import.meta.env.VITE_APP_API ?? '/api/';
 
 export async function fetchJson(
   endpoint: string,
