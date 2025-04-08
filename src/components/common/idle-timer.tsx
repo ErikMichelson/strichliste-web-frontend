@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { useSettings } from '../../store';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
+import { useSettings } from '../../store';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let timerId: any = 0;
 
 export function useIdleTimer(onTimeOut: () => void) {
   const settings = useSettings();
 
-  const resetTimer = () => {
+  const resetTimer = React.useCallback(() => {
     clearTimeout(timerId);
     timerId = setTimeout(onTimeOut, settings.common.idleTimeout);
-  };
+  }, [onTimeOut, settings.common.idleTimeout]);
   React.useEffect(() => {
     resetTimer();
     document.addEventListener('scroll', resetTimer);
@@ -25,8 +25,7 @@ export function useIdleTimer(onTimeOut: () => void) {
       document.removeEventListener('keyup', resetTimer);
       clearTimeout(timerId);
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [resetTimer]);
 }
 
 export const WrappedIdleTimer = React.memo(

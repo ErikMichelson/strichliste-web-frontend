@@ -33,7 +33,7 @@ export class Scanner extends React.Component<Props, State> {
     clearTimeout(this.state.timeout);
 
     if (key === 'Enter' && this.state.maybeBarcode.length > 6) {
-      this.setState(state => ({
+      this.setState((state) => ({
         barcode: state.maybeBarcode,
         maybeBarcode: '',
       }));
@@ -41,7 +41,7 @@ export class Scanner extends React.Component<Props, State> {
         this.props.onChange(this.state.barcode);
       }
     } else if (/[a-zA-Z0-9]/i.test(key)) {
-      this.setState(state => ({
+      this.setState((state) => ({
         barcode: '',
         maybeBarcode: state.maybeBarcode + key,
       }));

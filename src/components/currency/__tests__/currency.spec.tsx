@@ -1,5 +1,6 @@
-import * as React from 'react';
 import { cleanup, render } from '@testing-library/react';
+import * as React from 'react';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import { IntlProvider } from 'react-intl';
 import { Currency } from '../';

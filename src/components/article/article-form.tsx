@@ -1,38 +1,38 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useArticle } from '../../store';
 import {
-  Article,
-  startLoadingArticleDetails,
-  AddArticleParams,
-  startAddArticle,
-  startAddBarcode,
-  startDeleteBarcode,
-  Barcode,
-  startAddTag,
-  startDeleteTag,
-  Tag,
-  startDeletingArticle,
-  getArticleHistory,
-} from '../../store/reducers';
-import { CurrencyInput, Currency } from '../currency';
-import { useArticleValidator } from './validator';
-import {
-  Card,
-  Input,
   AcceptButton,
-  Plus,
   Button,
   CancelButton,
-  Flex,
+  Card,
   Ellipsis,
+  Flex,
+  Input,
+  Plus,
 } from '../../bricks';
+import { useArticle } from '../../store';
+import {
+  AddArticleParams,
+  Article,
+  Barcode,
+  Tag,
+  getArticleHistory,
+  startAddArticle,
+  startAddBarcode,
+  startAddTag,
+  startDeleteBarcode,
+  startDeleteTag,
+  startDeletingArticle,
+  startLoadingArticleDetails,
+} from '../../store/reducers';
+import { Currency, CurrencyInput } from '../currency';
+import { useArticleValidator } from './validator';
 
-import styles from './article-form.module.css';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { FormField } from '../../bricks/input/input';
 import { ScrollToTop } from '../common/scroll-to-top';
-import { useDispatch } from 'react-redux';
+import styles from './article-form.module.css';
 
 interface Props {
   articleId?: number;
@@ -49,22 +49,20 @@ export const ArticleForm: React.FC<Props> = (props) => {
       startLoadingArticleDetails(dispatch, props.articleId);
     }
     // eslint-disable-next-line
-  }, [props.articleId]);
+  }, [props.articleId, dispatch]);
 
   return (
     <>
       <ScrollToTop />
       <h2 className={styles.articleName}>
-        {article
-          ? article.name
-          : intl.formatMessage({ id: 'ARTICLE_ADD_FROM_HEADLINE' })}
+        {article ? article.name : intl.formatMessage({ id: 'ARTICLE_ADD_FROM_HEADLINE' })}
       </h2>
       <div className={styles.grid}>
         <ArticleDetails article={article} />
 
         {article && <ArticleTags article={article} />}
         {article && <ArticleBarCodes article={article} />}
-        {article && article.precursor && <ArticleHistory article={article} />}
+        {article?.precursor && <ArticleHistory article={article} />}
         {article && <ArticleMetrics article={article} />}
       </div>
       {article && <ToggleActivity article={article} />}
@@ -80,22 +78,19 @@ const extractParams = (article?: Article): AddArticleParams => {
       isActive: article.isActive,
       precursor: article.precursor,
     };
-  } else {
-    return {
-      name: '',
-      amount: 0,
-      isActive: true,
-      precursor: undefined,
-    };
   }
+  return {
+    name: '',
+    amount: 0,
+    isActive: true,
+    precursor: undefined,
+  };
 };
 
 const ArticleDetails: React.FC<{ article?: Article }> = ({ article }) => {
   const intl = useIntl();
   const history = useHistory();
-  const [params, setParams] = React.useState<AddArticleParams>(
-    extractParams(article)
-  );
+  const [params, setParams] = React.useState<AddArticleParams>(extractParams(article));
   const dispatch = useDispatch();
   React.useEffect(() => {
     setParams(extractParams(article));
@@ -118,9 +113,7 @@ const ArticleDetails: React.FC<{ article?: Article }> = ({ article }) => {
         <h3 className={styles.subHeader}>
           <FormattedMessage id="ARTICLE_ADD_FORM_DETAILS" />
         </h3>
-        {article && article.created && (
-          <p className={styles.lastEdit}>Last edit: {article.created}</p>
-        )}
+        {article?.created && <p className={styles.lastEdit}>Last edit: {article.created}</p>}
         <FormField
           inline
           label={<FormattedMessage id="ARTICLE_ADD_FORM_NAME_LABEL" />}
@@ -177,9 +170,7 @@ const ArticleBarCodes: React.FC<{ article: Article }> = ({ article }) => {
       placeholder={'add barcode'}
       addRowLabel={<FormattedMessage id="ARTICLE_FORM_ADD_BARCODE" />}
       items={barcodes}
-      handleAddRow={() =>
-        setBarcodes([...barcodes, { id: 0, barcode: '', created: '' }])
-      }
+      handleAddRow={() => setBarcodes([...barcodes, { id: 0, barcode: '', created: '' }])}
       handleSaveItem={handleAddBarcode}
       handleDeleteItem={handleDeleteBarcode}
       getItemValue={(item) => item.barcode}
@@ -251,9 +242,7 @@ function ItemList<Item>({
       ))}
 
       <Button primary onClick={handleAddRow}>
-        <Plus
-          style={{ width: '1rem', height: '1rem', marginRight: '0.5rem' }}
-        />
+        <Plus style={{ width: '1rem', height: '1rem', marginRight: '0.5rem' }} />
         {addRowLabel}
       </Button>
     </Card>
@@ -311,10 +300,7 @@ const ArticleMetrics: React.FC<{ article: Article }> = ({ article }) => {
       <h3 className={styles.subHeader}>
         <FormattedMessage id="METRICS_HEADLINE" />
       </h3>
-      <FormattedMessage
-        id="ARTICLE_USAGE_COUNT_LABEL"
-        values={{ value: article.usageCount }}
-      />
+      <FormattedMessage id="ARTICLE_USAGE_COUNT_LABEL" values={{ value: article.usageCount }} />
     </Card>
   );
 };

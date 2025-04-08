@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function TransactionLink(props: RouteComponentProps): JSX.Element {
   return (
-    <Link to={props.match.url + '/send_money_to_a_friend'}>
+    <Link to={`${props.match.url}/send_money_to_a_friend`}>
       <FormattedMessage id="USER_TRANSACTION_CREATE_LINK" />
     </Link>
   );

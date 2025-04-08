@@ -2,11 +2,7 @@ import * as React from 'react';
 import { FormattedNumber } from 'react-intl';
 import { Input } from '../../bricks';
 
-function getPlaceholder(
-  placeholder: string | undefined,
-  value: string,
-  hasFocus: boolean
-): string {
+function getPlaceholder(placeholder: string | undefined, value: string, hasFocus: boolean): string {
   return !placeholder || value !== '0.00' || hasFocus ? value : placeholder;
 }
 
@@ -70,7 +66,7 @@ export class CurrencyInput extends React.Component<Props, State> {
       ? Math.abs(convertFormattedNumberToCents(e.target.value))
       : convertFormattedNumberToCents(e.target.value);
     this.setState({ value: cleanedNumber / 100 }, () => {
-      if (this.inputRef && this.inputRef.current) {
+      if (this.inputRef?.current) {
         moveCursorToEnd(this.inputRef.current);
       }
     });
@@ -92,20 +88,13 @@ export class CurrencyInput extends React.Component<Props, State> {
               ref={this.inputRef}
               style={{
                 color:
-                  getPlaceholder(
-                    this.props.placeholder,
-                    formattedValue,
-                    this.state.hasFocus
-                  ) === this.props.placeholder
+                  getPlaceholder(this.props.placeholder, formattedValue, this.state.hasFocus) ===
+                  this.props.placeholder
                     ? '#8e8e8e'
                     : undefined,
               }}
               placeholder={this.props.placeholder}
-              value={getPlaceholder(
-                this.props.placeholder,
-                formattedValue,
-                this.state.hasFocus
-              )}
+              value={getPlaceholder(this.props.placeholder, formattedValue, this.state.hasFocus)}
               onFocus={() => this.setState({ hasFocus: true })}
               onBlur={() =>
                 this.setState({

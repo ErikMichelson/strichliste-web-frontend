@@ -1,7 +1,7 @@
 import React from 'react';
+import { Button } from '../../bricks';
 import { get } from '../../services/api';
 import { Tag } from '../../store/reducers';
-import { Button } from '../../bricks';
 
 import styles from './article-tag-filter.module.css';
 
@@ -25,11 +25,10 @@ export const ArticleTagFilter: React.FC<{
 
   React.useEffect(() => {
     onFilterChange(activeTags);
-    // eslint-disable-next-line
-  }, [activeTags]);
+  }, [activeTags, onFilterChange]);
 
   React.useEffect(() => {
-    get('tag').then(result => {
+    get('tag').then((result) => {
       const { tags } = result;
       setTags(tags);
       cachedTags = tags;
@@ -38,14 +37,15 @@ export const ArticleTagFilter: React.FC<{
 
   return (
     <div className={styles.wrapper}>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <Button
           className={styles.tag}
           key={tag.id}
           primary={Boolean(activeTags[tag.id])}
           onClick={() => toggleTag(tag)}
-          children={tag.tag}
-        />
+        >
+          {tag.tag}
+        </Button>
       ))}
     </div>
   );

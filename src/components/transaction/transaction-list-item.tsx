@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { Currency } from '../currency';
-import { TransactionUndoButton } from './transaction-undo-button';
-import { useTransaction } from '../../store';
-import { getUserDetailLink } from '../user/user-router';
 import { Link } from 'react-router-dom';
-import { User, Article } from '../../store/reducers';
-import {
-  Ellipsis,
-  LineThrough,
-  AlertText,
-  ListItem,
-  ShoppingBagIcon,
-} from '../../bricks';
+import { AlertText, Ellipsis, LineThrough, ListItem, ShoppingBagIcon } from '../../bricks';
+import { useTransaction } from '../../store';
+import { Article, User } from '../../store/reducers';
+import { Currency } from '../currency';
+import { getUserDetailLink } from '../user/user-router';
+import { TransactionUndoButton } from './transaction-undo-button';
 
 import styles from './transaction-list-item.module.css';
 
@@ -22,15 +16,9 @@ interface ListItemProps {
   comment?: string;
 }
 
-const ListItemDescription = ({
-  user,
-  article,
-  isSender,
-  comment,
-}: ListItemProps) => {
+const ListItemDescription = ({ user, article, isSender, comment }: ListItemProps) => {
   const composedComment = (user && comment ? ':' : '') + (comment || '');
-  const title =
-    (article ? article.name : '') + (user ? user.name : '') + composedComment;
+  const title = (article ? article.name : '') + (user ? user.name : '') + composedComment;
   return (
     <Ellipsis title={title}>
       {user && (
@@ -65,10 +53,7 @@ export function TransactionListItem({
       <LineThrough lineThrough={transaction.isDeleted}>
         <div className={styles.grid}>
           <div className={styles.grow}>
-            <AlertText
-              style={{ marginRight: '1rem' }}
-              value={transaction.amount}
-            >
+            <AlertText style={{ marginRight: '1rem' }} value={transaction.amount}>
               <Currency value={transaction.amount} />
             </AlertText>
             <ListItemDescription
@@ -79,10 +64,7 @@ export function TransactionListItem({
             />
           </div>
           {transaction.isDeletable ? (
-            <TransactionUndoButton
-              transactionId={transaction.id}
-              userId={transaction.user.id}
-            />
+            <TransactionUndoButton transactionId={transaction.id} userId={transaction.user.id} />
           ) : (
             <Ellipsis>{transaction.created}</Ellipsis>
           )}

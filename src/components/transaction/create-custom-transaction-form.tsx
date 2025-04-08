@@ -3,11 +3,11 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
+import { Button } from '../../bricks';
+import { useSettings } from '../../store';
 import { startCreatingTransaction } from '../../store/reducers';
 import { CurrencyInput } from '../currency';
 import { useTransactionValidator } from './validator';
-import { useSettings } from '../../store';
-import { Button } from '../../bricks';
 
 import styles from './create-user-transaction-form.module.css';
 
@@ -55,7 +55,7 @@ export const CreateCustomTransactionForm = (props: Props) => {
           -
         </Button>
       ) : (
-        <div></div>
+        <div />
       )}
       <CurrencyInput
         value={value}
@@ -74,7 +74,7 @@ export const CreateCustomTransactionForm = (props: Props) => {
           +
         </Button>
       ) : (
-        <div></div>
+        <div />
       )}
     </div>
   );

@@ -5,8 +5,8 @@ import { playCashSound } from '../../services/sound';
 import { Action } from '../action';
 import { AppState, Dispatch } from '../store';
 import { Article } from './article';
-import { userDetailsLoaded } from './user';
 import { getPayment } from './setting';
+import { userDetailsLoaded } from './user';
 
 export interface Transaction {
   id: number;
@@ -40,9 +40,7 @@ export interface TransactionsLoadedAction {
   payload: Transaction[];
 }
 
-export function transactionsLoaded(
-  payload: Transaction[]
-): TransactionsLoadedAction {
+export function transactionsLoaded(payload: Transaction[]): TransactionsLoadedAction {
   return {
     type: TransactionTypes.TransactionsLoaded,
     payload,
@@ -66,7 +64,7 @@ export async function startLoadingTransactions(
     promise,
     defaultError: 'USER_TRANSACTIONS_LOADING_ERROR',
   });
-  if (data && data.transactions) {
+  if (data?.transactions) {
     dispatch(transactionsLoaded(data.transactions));
     return data;
   }
@@ -90,7 +88,7 @@ export async function startCreatingTransaction(
     promise,
     defaultError: 'USER_TRANSACTION_CREATION_ERROR',
   });
-  if (data && data.transaction) {
+  if (data?.transaction) {
     dispatch(userDetailsLoaded(data.transaction.user));
     dispatch(transactionsLoaded([data.transaction]));
     return data.transaction;
@@ -109,7 +107,7 @@ export async function startDeletingTransaction(
     promise,
     defaultError: 'USER_TRANSACTION_DELETION_ERROR',
   });
-  if (data && data.transaction) {
+  if (data?.transaction) {
     dispatch(userDetailsLoaded(data.transaction.user));
     dispatch(transactionsLoaded([data.transaction]));
   }
@@ -119,10 +117,7 @@ interface TransactionState {
   [key: number]: Transaction;
 }
 
-export function transaction(
-  state: TransactionState = {},
-  action: Action
-): TransactionState {
+export function transaction(state: TransactionState = {}, action: Action): TransactionState {
   switch (action.type) {
     case TransactionTypes.TransactionsLoaded:
       return action.payload.reduce((nextState, transaction) => {
@@ -137,10 +132,7 @@ export function getTransactionState(state: AppState): TransactionState {
   return state.transaction;
 }
 
-export function getTransaction(
-  state: AppState,
-  id: number
-): Transaction | undefined {
+export function getTransaction(state: AppState, id: number): Transaction | undefined {
   return getTransactionState(state)[id];
 }
 

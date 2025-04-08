@@ -1,24 +1,23 @@
 import * as React from 'react';
-import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
+import { IntlProvider } from 'react-intl';
 import { ArticleRouter } from './components/article/article-router';
-import { en } from './locales/en';
 import { ErrorMessage } from './components/common/error-message';
 import { HeaderMenu } from './components/common/header-menu';
-import { IntlProvider } from 'react-intl';
-import { MainFooter } from './components/footer';
 import { SearchResults } from './components/common/search-results';
+import { MainFooter } from './components/footer';
 import { SplitInvoiceForm } from './components/transaction';
-import { startLoadingSettings } from './store/reducers';
-import { store } from './store';
 import { UserRouter } from './components/user/user-router';
+import { en } from './locales/en';
+import { store } from './store';
+import { startLoadingSettings } from './store/reducers';
 
-// tslint:disable-next-line:no-import-side-effect
 import 'inter-ui';
-import { MetricsView } from './components/metrics';
-import { WrappedIdleTimer } from './components/common/idle-timer';
 import { ThemeProvider } from './bricks';
+import { WrappedIdleTimer } from './components/common/idle-timer';
+import { MetricsView } from './components/metrics';
 
 const Layout = () => {
   const dispatch = useDispatch();

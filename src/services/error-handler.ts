@@ -7,9 +7,7 @@ function handleApiError(
   config: ErrorConfig<unknown>,
   error: { class: string }
 ): void {
-  const [key] = Object.keys(config.errors || {}).filter(key =>
-    error.class.indexOf(key)
-  );
+  const [key] = Object.keys(config.errors || {}).filter((key) => error.class.indexOf(key));
 
   if (key && config.errors && config.errors[key]) {
     dispatch(setGlobalError(config.errors[key]));
@@ -34,11 +32,7 @@ export async function errorHandler<Result extends MaybeResponse>(
   dispatch: Dispatch,
   config: ErrorConfig<Result>
 ): Promise<Result | undefined> {
-  const {
-    loader = LoaderTypes.GlobalLoader,
-    promise,
-    defaultError = '',
-  } = config;
+  const { loader = LoaderTypes.GlobalLoader, promise, defaultError = '' } = config;
   dispatch(setLoader({ [loader]: true }));
   dispatch(setGlobalError(''));
   try {
@@ -47,10 +41,9 @@ export async function errorHandler<Result extends MaybeResponse>(
     if (data.error) {
       handleApiError(dispatch, config, data.error);
       return undefined;
-    } else {
-      return data;
     }
-  } catch (e) {
+    return data;
+  } catch (_e) {
     dispatch(setGlobalError(defaultError));
     dispatch(setLoader({ [loader]: false }));
     return undefined;

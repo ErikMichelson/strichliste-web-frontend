@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { HeaderNav, Logo, ScrollContainer, SearchIcon } from '../../bricks';
 import { useSettings } from '../../store';
-import { HeaderNav, Logo, SearchIcon, ScrollContainer } from '../../bricks';
 
 const navLinkStyle = { marginRight: '1rem' };
 
@@ -32,11 +32,7 @@ export function HeaderMenu(): JSX.Element {
           <FormattedMessage id="ARTICLE_LINK" />
         </NavLink>
         {payment.splitInvoice.enabled && (
-          <NavLink
-            style={navLinkStyle}
-            activeClassName="active"
-            to="/split-invoice"
-          >
+          <NavLink style={navLinkStyle} activeClassName="active" to="/split-invoice">
             <FormattedMessage id="SPLIT_INVOICE_LINK" />
           </NavLink>
         )}

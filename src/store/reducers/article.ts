@@ -57,7 +57,7 @@ export async function startLoadingArticleDetails(
   const data = await errorHandler<any>(dispatch, {
     promise,
   });
-  if (data && data.article) {
+  if (data?.article) {
     dispatch(articlesLoaded([data.article]));
     return data.article;
   }
@@ -74,23 +74,19 @@ export async function startAddBarcode(
   const data = await errorHandler<any>(dispatch, {
     promise,
   });
-  if (data && data.article) {
+  if (data?.article) {
     return data.article;
   }
 
   return undefined;
 }
 
-export async function startDeleteBarcode(
-  dispatch: Dispatch,
-  articleId: number,
-  barcodeId: number
-) {
+export async function startDeleteBarcode(dispatch: Dispatch, articleId: number, barcodeId: number) {
   const promise = restDelete(`article/${articleId}/barcode/${barcodeId}`);
   const data = await errorHandler<any>(dispatch, {
     promise,
   });
-  if (data && data.article) {
+  if (data?.article) {
     return data.article;
   }
 
@@ -105,39 +101,32 @@ export async function startAddTag(
   const data = await errorHandler<any>(dispatch, {
     promise,
   });
-  if (data && data.article) {
+  if (data?.article) {
     return data.article;
   }
 
   return undefined;
 }
 
-export async function startDeleteTag(
-  dispatch: Dispatch,
-  articleId: number,
-  tagId: number
-) {
+export async function startDeleteTag(dispatch: Dispatch, articleId: number, tagId: number) {
   const promise = restDelete(`article/${articleId}/tag/${tagId}`);
   const data = await errorHandler<any>(dispatch, {
     promise,
   });
-  if (data && data.article) {
+  if (data?.article) {
     return data.article;
   }
 
   return undefined;
 }
 
-export async function startLoadingArticles(
-  dispatch: Dispatch,
-  isActive: boolean
-): Promise<void> {
+export async function startLoadingArticles(dispatch: Dispatch, isActive: boolean): Promise<void> {
   const promise = get(`article?limit=999&active=${isActive}&ancestor=false`);
   const data = await errorHandler<ArticleResponse>(dispatch, {
     promise,
     defaultError: 'ARTICLES_COULD_NOT_BE_LOADED',
   });
-  if (data && data.articles && data.articles.length) {
+  if (data?.articles?.length) {
     dispatch(articlesLoaded(data.articles));
   }
 }
@@ -151,7 +140,7 @@ export async function startDeletingArticle(
     promise,
     defaultError: 'ARTICLES_COULD_NOT_BE_DELETED',
   });
-  if (data && data.article) {
+  if (data?.article) {
     dispatch(articlesLoaded([data.article]));
     return data.article;
   }
@@ -167,12 +156,11 @@ export async function getArticleByBarcode(
     promise,
     defaultError: 'ARTICLE_COULD_NOT_BE_LOADED_BY_BARCODE',
   });
-  if (data && data.articles && data.articles.length) {
+  if (data?.articles?.length) {
     dispatch(articlesLoaded(data.articles));
     return data.articles[0];
-  } else {
-    throw Error('no articles are matching the barcode');
   }
+  throw Error('no articles are matching the barcode');
 }
 
 export interface AddArticleParams {
@@ -191,7 +179,7 @@ export async function startAddArticle(
     promise,
     defaultError: 'ARTICLE_COULD_NOT_BE_CREATED',
   });
-  if (data && data.article) {
+  if (data?.article) {
     dispatch(articlesLoaded([data.article]));
     if (data.article.precursor) {
       dispatch(articlesLoaded([data.article.precursor]));
@@ -209,10 +197,7 @@ interface ArticleState {
 
 const initialState: ArticleState = {};
 
-export function article(
-  state: ArticleState = initialState,
-  action: Action
-): ArticleState {
+export function article(state: ArticleState = initialState, action: Action): ArticleState {
   switch (action.type) {
     case ArticleTypes.articlesLoaded:
       return action.payload.reduce((nextState, article) => {
@@ -227,10 +212,7 @@ export function getArticle(state: AppState): ArticleState {
   return state.article;
 }
 
-export function getArticleById(
-  state: AppState,
-  id: number
-): Article | undefined {
+export function getArticleById(state: AppState, id: number): Article | undefined {
   return getArticle(state)[id];
 }
 
@@ -242,14 +224,11 @@ export function getArticleList(state: AppState): Article[] {
 
 export function getPopularArticles(state: AppState): Article[] {
   return getArticleList(state)
-    .filter(article => article.isActive)
+    .filter((article) => article.isActive)
     .sort((a, b) => b.usageCount - a.usageCount);
 }
 
-function flattenHistory<Item>(
-  selector: (item: Item) => Item | undefined,
-  list: Item
-): Item[] {
+function flattenHistory<Item>(selector: (item: Item) => Item | undefined, list: Item): Item[] {
   const next = selector(list);
   if (!next) {
     return [];

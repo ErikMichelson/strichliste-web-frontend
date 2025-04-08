@@ -1,8 +1,6 @@
 import { Omit, merge } from 'lodash';
 import { DeepPartial } from 'redux';
-import createMockStore, {
-  MockStore as OriginalMockStore,
-} from 'redux-mock-store';
+import createMockStore, { MockStore as OriginalMockStore } from 'redux-mock-store';
 
 import { Action, AppState, Dispatch, reducer } from '../store';
 

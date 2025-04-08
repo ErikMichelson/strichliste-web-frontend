@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { DeepPartial } from 'redux';
+import { describe, expect, it, vi } from 'vitest';
 import { user } from '..';
 import { get, post } from '../../../services/api';
 import { getMockStore } from '../../../spec-configs/mock-store';
@@ -140,24 +141,18 @@ describe('action creators', () => {
 
   describe('startLoadingUserDetails', () => {
     it('triggers userDetailsLoaded on success', async () => {
-      (get as any).mockImplementationOnce(() =>
-        Promise.resolve({ user: [{ id: 1 }] })
-      );
+      (get as any).mockImplementationOnce(() => Promise.resolve({ user: [{ id: 1 }] }));
 
       const store = getMockStore();
       await startLoadingUserDetails(store.dispatch, 1);
       expect(get).toHaveBeenCalledWith('user/1');
-      expect(store.getActions()).toEqual([
-        userDetailsLoaded([{ id: 1 }] as any),
-      ]);
+      expect(store.getActions()).toEqual([userDetailsLoaded([{ id: 1 }] as any)]);
     });
   });
 
   describe('startCreatingUser', () => {
     it('triggers userDetailsLoaded on success', async () => {
-      (post as any).mockImplementationOnce(() =>
-        Promise.resolve({ user: [{ id: 1 }] })
-      );
+      (post as any).mockImplementationOnce(() => Promise.resolve({ user: [{ id: 1 }] }));
       const store = getMockStore();
       await startCreatingUser(store.dispatch, 'test');
       expect(post).toHaveBeenCalledWith('user', { name: 'test' });
@@ -167,9 +162,7 @@ describe('action creators', () => {
 
   describe('startUpdateUser', () => {
     it('triggers userDetailsLoaded on success', async () => {
-      (post as any).mockImplementationOnce(() =>
-        Promise.resolve({ user: [{ id: 1 }] })
-      );
+      (post as any).mockImplementationOnce(() => Promise.resolve({ user: [{ id: 1 }] }));
       const store = getMockStore();
       await startUpdateUser(store.dispatch, 1, {
         name: 'test',
@@ -191,7 +184,10 @@ describe('selectors', () => {
         getUserArray({
           user: { 1: { id: 1, name: 'a' }, 2: { id: 2, name: 'b' } },
         } as any)
-      ).toEqual([{ id: 1, name: 'a' }, { id: 2, name: 'b' }]);
+      ).toEqual([
+        { id: 1, name: 'a' },
+        { id: 2, name: 'b' },
+      ]);
     });
   });
   describe('getUser', () => {
@@ -210,20 +206,14 @@ describe('selectors', () => {
     describe('with no user', () => {
       it('returns an empty array', () => {
         expect(
-          getUserTransactionsArray(
-            { user: { 1: { id: 1 }, 2: { id: 2 } } } as any,
-            4
-          )
+          getUserTransactionsArray({ user: { 1: { id: 1 }, 2: { id: 2 } } } as any, 4)
         ).toEqual([]);
       });
     });
     describe('with no transactions', () => {
       it('returns an empty array', () => {
         expect(
-          getUserTransactionsArray(
-            { user: { 1: { id: 1 }, 2: { id: 2 } } } as any,
-            2
-          )
+          getUserTransactionsArray({ user: { 1: { id: 1 }, 2: { id: 2 } } } as any, 2)
         ).toEqual([]);
       });
     });

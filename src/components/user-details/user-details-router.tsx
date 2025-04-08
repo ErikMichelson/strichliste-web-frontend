@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router';
 
 import { PayPalTransaction } from '../paypal/paypal-transaction';
+import { CreateUserTransactionForm } from '../transaction';
 import { UserArticleTransaction } from '../user/views/user-article-transaction';
 import { UserEditView } from '../user/views/user-edit-view';
-import { CreateUserTransactionForm } from '../transaction';
 
 export function UserDetailRouter(): JSX.Element {
   return (
@@ -16,16 +16,8 @@ export function UserDetailRouter(): JSX.Element {
         exact={true}
         component={CreateUserTransactionForm}
       />
-      <Route
-        path="/user/:id/paypal"
-        exact={true}
-        component={PayPalTransaction}
-      />
-      <Route
-        path="/user/:id/paypal/:amount"
-        exact={true}
-        component={PayPalTransaction}
-      />
+      <Route path="/user/:id/paypal" exact={true} component={PayPalTransaction} />
+      <Route path="/user/:id/paypal/:amount" exact={true} component={PayPalTransaction} />
     </Switch>
   );
 }

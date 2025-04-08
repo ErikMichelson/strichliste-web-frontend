@@ -22,17 +22,11 @@ function checkDepositIsValid({
   balance,
   value,
 }: CheckValidProps): boolean {
-  if (
-    typeof paymentBoundaryValue === 'number' &&
-    value > paymentBoundaryValue
-  ) {
+  if (typeof paymentBoundaryValue === 'number' && value > paymentBoundaryValue) {
     return false;
   }
 
-  if (
-    typeof accountBoundaryValue === 'boolean' ||
-    typeof balance === 'boolean'
-  ) {
+  if (typeof accountBoundaryValue === 'boolean' || typeof balance === 'boolean') {
     return true;
   }
   return value + balance < accountBoundaryValue;
@@ -44,17 +38,11 @@ function checkDispenseIsValid({
   balance,
   value,
 }: CheckValidProps): boolean {
-  if (
-    typeof paymentBoundaryValue === 'number' &&
-    value > paymentBoundaryValue * -1
-  ) {
+  if (typeof paymentBoundaryValue === 'number' && value > paymentBoundaryValue * -1) {
     return false;
   }
 
-  if (
-    typeof accountBoundaryValue === 'boolean' ||
-    typeof balance === 'boolean'
-  ) {
+  if (typeof accountBoundaryValue === 'boolean' || typeof balance === 'boolean') {
     return true;
   }
   return balance - value > accountBoundaryValue;
@@ -77,21 +65,16 @@ export const isTransactionValid = ({
       value,
       balance,
     });
-  } else {
-    return checkDispenseIsValid({
-      accountBoundaryValue: accountBoundary.lower,
-      paymentBoundaryValue: paymentBoundary.lower,
-      value,
-      balance,
-    });
   }
+  return checkDispenseIsValid({
+    accountBoundaryValue: accountBoundary.lower,
+    paymentBoundaryValue: paymentBoundary.lower,
+    value,
+    balance,
+  });
 };
 
-export function useTransactionValidator(
-  value: number,
-  userId: string,
-  isDeposit: boolean = true
-): boolean {
+export function useTransactionValidator(value: number, userId: string, isDeposit = true): boolean {
   const settings = useSettings();
   const balance = useUserBalance(userId);
 

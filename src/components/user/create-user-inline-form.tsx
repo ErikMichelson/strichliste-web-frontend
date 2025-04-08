@@ -1,20 +1,18 @@
 import * as React from 'react';
 
 import { useIntl } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import { AddIcon, Button, EditIcon, Flex, Input } from '../../bricks';
+import { Modal, useModal } from '../../bricks/modal/modal';
 import { startCreatingUser } from '../../store/reducers';
-import { Button, Flex, Input, AddIcon, EditIcon } from '../../bricks';
-import { useModal, Modal } from '../../bricks/modal/modal';
 
 interface Props {
   isActive: boolean;
 }
 
-export const CreateUserInlineForm = ({
-  history,
-}: Props & RouteComponentProps) => {
+export const CreateUserInlineForm = ({ history }: Props & RouteComponentProps) => {
   const modalProps = useModal();
   const [name, setName] = React.useState('');
   const dispatch = useDispatch();
@@ -25,7 +23,7 @@ export const CreateUserInlineForm = ({
     const trimmedName = name.trim();
     if (name) {
       const user = await startCreatingUser(dispatch, trimmedName);
-      if (user && user.id) {
+      if (user?.id) {
         history.push(`/user/${user.id}`);
       }
     } else {

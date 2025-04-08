@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch, Redirect } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { WrappedIdleTimer } from '../common/idle-timer';
 import { ArticleEditFormView } from './article-edit-form-view';
 import { ArticleList } from './article-list';
@@ -19,16 +19,8 @@ export function ArticleRouter(): JSX.Element {
           exact={true}
           component={() => <ArticleList isActive={false} />}
         />
-        <Route
-          path="/articles/add"
-          exact={true}
-          component={ArticleEditFormView}
-        />
-        <Route
-          path="/articles/:id/edit"
-          exact={true}
-          component={ArticleEditFormView}
-        />
+        <Route path="/articles/add" exact={true} component={ArticleEditFormView} />
+        <Route path="/articles/:id/edit" exact={true} component={ArticleEditFormView} />
         <Redirect from="/articles" to="/articles/active" />
       </Switch>
     </>

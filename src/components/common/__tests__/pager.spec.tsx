@@ -1,5 +1,6 @@
-import * as React from 'react';
 import { RenderResult, cleanup, fireEvent } from '@testing-library/react';
+import * as React from 'react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { renderWithIntl } from '../../../spec-configs/render';
 import { Pager } from '../pager';

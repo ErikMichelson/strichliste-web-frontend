@@ -2,11 +2,11 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+import { useDispatch } from 'react-redux';
 import { useUserName } from '../../store';
 import { Transaction, startCreatingTransaction } from '../../store/reducers';
 import { getUserDetailLink, getUserPayPalLink } from '../user/user-router';
 import { PayPalTransactionForm } from './paypal-transaction-form';
-import { useDispatch } from 'react-redux';
 
 export type PayPalTransactionProps = RouteComponentProps<{
   id: string;
@@ -34,8 +34,7 @@ export const PayPalTransaction = withRouter((props: PayPalTransactionProps) => {
         }
       });
     }
-    // eslint-disable-next-line
-  }, [paidAmount]);
+  }, [paidAmount, dispatch, props.history, userId]);
 
   return (
     <>
@@ -45,10 +44,7 @@ export const PayPalTransaction = withRouter((props: PayPalTransactionProps) => {
           marginBottom: '1rem',
         }}
       >
-        <FormattedMessage
-          id="PAYPAL_HEADING"
-          defaultMessage="Charge by paypal"
-        />
+        <FormattedMessage id="PAYPAL_HEADING" defaultMessage="Charge by paypal" />
       </h2>
       {props.match.params.amount === 'error' ? (
         <FormattedMessage

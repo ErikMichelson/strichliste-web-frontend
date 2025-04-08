@@ -1,0 +1,50 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "files": {
+        "ignore": [
+            "src/bricks/icons/*"
+        ]
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "correctness": {
+                "noUnusedVariables": "error",
+                "noUndeclaredVariables": "warn"
+            },
+            "a11y": {
+                "noSvgWithoutTitle": "warn"
+            },
+            "suspicious": {
+                "noExplicitAny": "warn"
+            },
+            "style": {
+                "noNonNullAssertion": "warn",
+                "useConst": "error",
+                "useImportType": "off"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "indentWidth": 2,
+        "indentStyle": "space",
+        "lineWidth": 100
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "single",
+            "trailingCommas": "es5",
+            "semicolons": "always",
+        }
+    }
+}

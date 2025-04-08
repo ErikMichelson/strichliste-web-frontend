@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { startLoadingUsers, User } from '../../../store/reducers';
+import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { useUserArray } from '../../../store';
+import { User, startLoadingUsers } from '../../../store/reducers';
+import { useUserDetailUrl } from '../../user/user-router';
 import { SearchList } from '../search-list/search-list';
 import { SearchResultItem } from './search-result-item/search-result-item';
-import { RouteComponentProps } from 'react-router';
-import { useUserDetailUrl } from '../../user/user-router';
-import { useDispatch } from 'react-redux';
 
 export const SearchResults: React.FC<RouteComponentProps> = (props) => {
   const userDetailUrl = useUserDetailUrl();
-  const handleOnUserSelect = (user: User) =>
-    props.history.push(userDetailUrl(user.id));
+  const handleOnUserSelect = (user: User) => props.history.push(userDetailUrl(user.id));
   return (
     <div style={{ margin: '1rem' }}>
       <UserSearchList onUserSelect={handleOnUserSelect} />
@@ -30,24 +30,18 @@ export const UserSearchList: React.FC<{
     startLoadingUsers(dispatch);
   }, [dispatch]);
   const filteredUsers = filterUsers
-    ? userArray.filter(
-        (user) => !filterUsers.map((user) => user.id).includes(user.id)
-      )
+    ? userArray.filter((user) => !filterUsers.map((user) => user.id).includes(user.id))
     : filterUserId
-    ? // eslint-disable-next-line
-      userArray.filter((user) => user.id != filterUserId)
-    : userArray;
+      ? // eslint-disable-next-line
+        userArray.filter((user) => user.id !== filterUserId)
+      : userArray;
 
   return (
     <SearchList
       scrollableTarget={scrollableTarget}
       pageSize={10}
       renderItem={(user: User) => (
-        <SearchResultItem
-          key={user.id}
-          name={user.name}
-          onClick={() => onUserSelect(user)}
-        />
+        <SearchResultItem key={user.id} name={user.name} onClick={() => onUserSelect(user)} />
       )}
       items={filteredUsers}
     />

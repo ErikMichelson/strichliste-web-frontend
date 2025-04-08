@@ -46,7 +46,5 @@ export function getLoader(state: AppState): Loader {
 export function getGlobalLoader(state: AppState): boolean {
   const loader = getLoader(state);
 
-  return loader[LoaderTypes.GlobalLoader]
-    ? loader[LoaderTypes.GlobalLoader]
-    : false;
+  return loader[LoaderTypes.GlobalLoader] ? loader[LoaderTypes.GlobalLoader] : false;
 }

@@ -1,20 +1,20 @@
 import React from 'react';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import {
+  Bar,
   BarChart,
+  CartesianGrid,
+  ComposedChart,
   Line,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ComposedChart,
-  Bar,
 } from 'recharts';
 
-import { useMetrics } from './resource';
+import { AlertText, Card, GridThree, Separator } from '../../bricks';
 import { Currency } from '../currency';
-import { Card, GridThree, AlertText, Separator } from '../../bricks';
+import { useMetrics } from './resource';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FixedTooltip: any = Tooltip;
@@ -47,10 +47,7 @@ const Metrics: React.FC = () => {
         </Card>
         <Card margin="1rem 0 1rem 1rem">
           <h2>
-            <FormattedMessage
-              id="METRICS_TRANSACTION_COUNT"
-              defaultMessage="transactions"
-            />
+            <FormattedMessage id="METRICS_TRANSACTION_COUNT" defaultMessage="transactions" />
           </h2>
 
           <FormattedNumber value={metrics.transactionCount} />
@@ -67,12 +64,7 @@ const Metrics: React.FC = () => {
             <XAxis dataKey="date" />
             <YAxis />
             <FixedTooltip contentStyle={{ background }} />
-            <Line
-              type="monotone"
-              dataKey="balance"
-              stroke={stroke}
-              activeDot={{ r: 8 }}
-            />
+            <Line type="monotone" dataKey="balance" stroke={stroke} activeDot={{ r: 8 }} />
             <Bar dataKey="charged" barSize={20} fill="#00cc1d" />
             <Bar dataKey="spent" barSize={20} fill="#f54963" />
           </ComposedChart>

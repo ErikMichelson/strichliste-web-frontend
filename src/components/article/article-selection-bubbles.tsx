@@ -1,12 +1,12 @@
 import * as React from 'react';
 
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import { Button, CancelButton, Flex, Input } from '../../bricks';
 import { usePopularArticles } from '../../store';
 import { Article, startLoadingArticles } from '../../store/reducers';
 import { Currency } from '../currency';
 import { ArticleValidator } from './validator';
-import { Flex, Input, CancelButton, Button } from '../../bricks';
-import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 
 interface Props {
   userId: string;
@@ -37,10 +37,7 @@ export const ArticleSelectionBubbles = (props: Props) => {
       </Flex>
       <Flex margin="2rem 0 0 0" flexWrap="wrap" justifyContent="center">
         {items
-          .filter(
-            (item) =>
-              !query || item.name.toLowerCase().includes(query.toLowerCase())
-          )
+          .filter((item) => !query || item.name.toLowerCase().includes(query.toLowerCase()))
           .slice(0, ARTICLE_BUBBLE_LIMIT)
           .map((item) => (
             <ArticleValidator

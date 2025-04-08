@@ -1,10 +1,14 @@
 import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { AppState } from '.';
 import {
   Article,
+  Transaction,
   User,
   getArticleById,
   getArticleList,
+  getFilteredUserIds,
+  getGlobalError,
   getPayPal,
   getPopularArticles,
   getSettings,
@@ -12,13 +16,9 @@ import {
   getUserArray,
   getUserBalance,
   getUserState,
-  getFilteredUserIds,
-  getGlobalError,
-  isTransactionDeletable,
   isPaymentEnabled,
-  Transaction,
+  isTransactionDeletable,
 } from './reducers';
-import { useSelector } from 'react-redux';
 
 export function useFilteredUsers(isActive: boolean) {
   return useSelector<AppState, string[]>(
@@ -27,9 +27,7 @@ export function useFilteredUsers(isActive: boolean) {
 }
 
 export function useUser(id: string) {
-  return useSelector<AppState, User | undefined>(
-    useCallback((state) => getUser(state, id), [id])
-  );
+  return useSelector<AppState, User | undefined>(useCallback((state) => getUser(state, id), [id]));
 }
 
 export function useUserName(id: string): string {
@@ -40,9 +38,7 @@ export function useUserName(id: string): string {
 }
 
 export function useUserBalance(id: string): number {
-  return useSelector<AppState, number>(
-    useCallback((state) => getUserBalance(state, id), [id])
-  );
+  return useSelector<AppState, number>(useCallback((state) => getUserBalance(state, id), [id]));
 }
 
 export function useArticles(): Article[] {

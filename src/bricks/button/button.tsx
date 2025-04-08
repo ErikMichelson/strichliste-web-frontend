@@ -1,9 +1,9 @@
-import React from 'react';
 import classnames from 'classnames';
+import React from 'react';
 
-import styles from './button.module.css';
-import { AcceptIcon, CancelIcon } from '../icons';
 import { NavLink } from 'react-router-dom';
+import { AcceptIcon, CancelIcon } from '../icons';
+import styles from './button.module.css';
 
 type ButtonProps = JSX.IntrinsicElements['button'] & {
   padding?: string;
@@ -22,19 +22,7 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
 // eslint-disable-next-line react/display-name
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      children,
-      padding,
-      margin,
-      fab,
-      green,
-      red,
-      highlight,
-      primary,
-      style,
-      ...props
-    },
+    { className, children, padding, margin, fab, green, red, highlight, primary, style, ...props },
     ref
   ) => {
     return (
@@ -56,24 +44,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-export const AcceptButton: React.FC<ButtonProps> = props => (
+export const AcceptButton: React.FC<ButtonProps> = (props) => (
   <Button className={styles.acceptButton} fab {...props}>
     <AcceptIcon />
   </Button>
 );
 
-export const CancelButton: React.FC<ButtonProps> = props => (
+export const CancelButton: React.FC<ButtonProps> = (props) => (
   <Button className={styles.cancelButton} fab {...props}>
     <CancelIcon />
   </Button>
 );
 
-export const Tab: React.FC<any> = ({
-  children,
-  className,
-  active,
-  ...props
-}) => {
+export const Tab: React.FC<any> = ({ children, className, active, ...props }) => {
   return (
     <NavLink
       activeStyle={{
@@ -88,11 +71,7 @@ export const Tab: React.FC<any> = ({
   );
 };
 
-export const Tag: React.FC<{ red?: boolean; green?: boolean }> = ({
-  red,
-  green,
-  children,
-}) => {
+export const Tag: React.FC<{ red?: boolean; green?: boolean }> = ({ red, green, children }) => {
   return (
     <div
       className={classnames(styles.tags, {
@@ -100,10 +79,10 @@ export const Tag: React.FC<{ red?: boolean; green?: boolean }> = ({
         [styles.green]: green,
       })}
     >
-      <button>
+      <button type="button">
         <CancelIcon />
       </button>
-      <button>{children}</button>
+      <button type="button">{children}</button>
     </div>
   );
 };

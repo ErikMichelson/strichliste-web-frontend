@@ -19,7 +19,7 @@
   color: var(--textSubtile) !important;
 }
 .nav a:hover,
-.nav a[class^='active'] {
+.nav a[class^="active"] {
   color: var(--primary) !important;
 }
 
@@ -27,6 +27,6 @@
   fill: var(--textSubtile) !important;
 }
 .nav a:hover svg,
-.nav a[class^='active'] svg {
+.nav a[class^="active"] svg {
   fill: var(--primary) !important;
 }

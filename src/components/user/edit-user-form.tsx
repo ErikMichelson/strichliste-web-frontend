@@ -2,9 +2,9 @@ import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
+import { AcceptButton, CancelButton, Flex, Input } from '../../bricks';
 import { useUser } from '../../store';
 import { startUpdateUser } from '../../store/reducers';
-import { Input, Flex, CancelButton, AcceptButton } from '../../bricks';
 
 interface Props {
   userId: string;
@@ -19,28 +19,28 @@ const formStyle = {
 
 export const UserEditForm = (props: Props) => {
   const intl = useIntl();
-  const [name, setName] = React.useState(''),
-    [email, setEmail] = React.useState(''),
-    [isDisabled, setDisabled] = React.useState(false),
-    user = useUser(props.userId),
-    dispatch = useDispatch(),
-    submit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-      e.preventDefault();
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [isDisabled, setDisabled] = React.useState(false);
+  const user = useUser(props.userId);
+  const dispatch = useDispatch();
+  const submit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
 
-      const user = await startUpdateUser(dispatch, props.userId, {
-        name,
-        email,
-        isDisabled,
-      });
+    const user = await startUpdateUser(dispatch, props.userId, {
+      name,
+      email,
+      isDisabled,
+    });
 
-      if (user && user.isDisabled) {
-        props.onDisabled();
-        return;
-      }
-      if (user && user.id) {
-        props.onSave();
-      }
-    };
+    if (user?.isDisabled) {
+      props.onDisabled();
+      return;
+    }
+    if (user?.id) {
+      props.onSave();
+    }
+  };
 
   React.useEffect(() => {
     if (user) {
@@ -49,7 +49,7 @@ export const UserEditForm = (props: Props) => {
       setDisabled(user.isDisabled || false);
     }
     // eslint-disable-next-line
-  }, [props.userId]);
+  }, [user]);
 
   return (
     <form onSubmit={submit}>
@@ -95,10 +95,7 @@ export const UserEditForm = (props: Props) => {
           <div>
             <CancelButton margin="0 1rem" onClick={props.onCancel} />
 
-            <AcceptButton
-              type="submit"
-              title={intl.formatMessage({ id: 'USER_EDIT_TRIGGER' })}
-            />
+            <AcceptButton type="submit" title={intl.formatMessage({ id: 'USER_EDIT_TRIGGER' })} />
           </div>
         </Flex>
         {isDisabled && <FormattedMessage id="USER_EDIT_ACTIVE_WARNING" />}

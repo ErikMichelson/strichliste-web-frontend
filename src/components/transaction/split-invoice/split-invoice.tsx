@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  AcceptButton,
+  AcceptIcon,
+  AlertText,
+  Button,
+  CancelButton,
+  Card,
+  Input,
+  Separator,
+} from '../../../bricks';
 import { store } from '../../../store';
 import {
   CreateTransactionParams,
@@ -12,16 +22,6 @@ import { Currency, CurrencyInput } from '../../currency';
 import { UserSelection } from '../../user';
 import { UserName } from '../../user/user-name';
 import { isTransactionValid } from '../validator';
-import {
-  AcceptButton,
-  Input,
-  Separator,
-  CancelButton,
-  AlertText,
-  Button,
-  Card,
-  AcceptIcon,
-} from '../../../bricks';
 
 import styles from './split-invoice.module.css';
 
@@ -54,9 +54,7 @@ export const SplitInvoiceForm = () => {
   };
 
   const submitSplitInvoice = async () => {
-    participants.forEach(async participant => {
-      await createTransaction(participant);
-    });
+    Promise.all(participants.map((user) => createTransaction(user)));
   };
 
   const createTransaction = async (participant: User) => {
@@ -64,12 +62,8 @@ export const SplitInvoiceForm = () => {
       setIsLoading(true);
       const userId = participant.id;
       const params = getParams(recipient);
-      const result = await startCreatingTransaction(
-        store.dispatch,
-        userId,
-        params
-      );
-      setResponse(response => ({ ...response, [userId]: result || 'error' }));
+      const result = await startCreatingTransaction(store.dispatch, userId, params);
+      setResponse((response) => ({ ...response, [userId]: result || 'error' }));
     }
   };
 
@@ -81,9 +75,9 @@ export const SplitInvoiceForm = () => {
     };
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: validation should be updated when participants, amount or recipient change
   React.useEffect(() => {
     updateValidation();
-    // eslint-disable-next-line
   }, [participants, amount, recipient]);
 
   const addParticipant = (user: User) => {
@@ -91,12 +85,12 @@ export const SplitInvoiceForm = () => {
   };
 
   const removeParticipant = (userToRemove: User) => {
-    setParticipants(participants.filter(user => user.id !== userToRemove.id));
+    setParticipants(participants.filter((user) => user.id !== userToRemove.id));
   };
 
   const getSplitAmount = () => {
     const result = amount / getLengthOfParticipantsAndRecipient();
-    return isNaN(result) ? 0 : result;
+    return Number.isNaN(result) ? 0 : result;
   };
 
   const getLengthOfParticipantsAndRecipient = () => {
@@ -114,29 +108,26 @@ export const SplitInvoiceForm = () => {
     const accountBoundary = store.getState().settings.account.boundary;
     const paymentBoundary = store.getState().settings.payment.boundary;
     const initialValue: { [key: number]: string } = {};
-    const validation = Object.values(participants).reduce(
-      (acc, participant) => {
-        return {
-          ...acc,
-          [participant.id]: isTransactionValid({
-            value,
-            isDeposit: false,
-            accountBoundary,
-            paymentBoundary,
-            balance: participant.balance,
-          })
-            ? ''
-            : `can't afford it`,
-        };
-      },
-      initialValue
-    );
+    const validation = Object.values(participants).reduce((acc, participant) => {
+      return {
+        ...acc,
+        [participant.id]: isTransactionValid({
+          value,
+          isDeposit: false,
+          accountBoundary,
+          paymentBoundary,
+          balance: participant.balance,
+        })
+          ? ''
+          : `can't afford it`,
+      };
+    }, initialValue);
 
     setValidation(validation);
   };
 
   const formIsValid = () => {
-    return Object.values(validation).every(item => item === '');
+    return Object.values(validation).every((item) => item === '');
   };
 
   const showNotification = () => {
@@ -148,16 +139,13 @@ export const SplitInvoiceForm = () => {
       <div className={styles.wrapper}>
         {Object.keys(response).length === 0 && (
           <div>
-            <FormattedMessage
-              id="SPLIT_INVOICE_LOADING"
-              defaultMessage="creating transactions"
-            />
+            <FormattedMessage id="SPLIT_INVOICE_LOADING" defaultMessage="creating transactions" />
           </div>
         )}
-        {Object.keys(response).map(userId => {
+        {Object.keys(response).map((userId) => {
           const item = response[userId];
           // eslint-disable-next-line
-          const user = participants.find(user => user.id == userId);
+          const user = participants.find((user) => user.id === userId);
           const userName = user ? user.name : '';
 
           if (item === 'error') {
@@ -186,10 +174,7 @@ export const SplitInvoiceForm = () => {
           );
         })}
         <Button primary onClick={resetState}>
-          <FormattedMessage
-            id="reset form"
-            defaultMessage="split another invoice"
-          />
+          <FormattedMessage id="reset form" defaultMessage="split another invoice" />
         </Button>
       </div>
     );
@@ -222,7 +207,7 @@ export const SplitInvoiceForm = () => {
       </div>
       <Input
         value={comment}
-        onChange={e => setComment(e.target.value)}
+        onChange={(e) => setComment(e.target.value)}
         placeholder={intl.formatMessage({
           id: 'USER_TRANSACTIONS_TABLE_COMMENT',
         })}
@@ -232,7 +217,7 @@ export const SplitInvoiceForm = () => {
       </div>
       <div>
         <div>
-          {participants.map(user => (
+          {participants.map((user) => (
             <div style={{ margin: '0.25rem 0' }} key={user.id}>
               <CancelButton
                 onClick={() => removeParticipant(user)}
@@ -246,10 +231,7 @@ export const SplitInvoiceForm = () => {
               />
               {validation[user.id] && (
                 <AlertText value={-1}>
-                  <FormattedMessage
-                    id="CANT_AFFORD"
-                    defaultMessage="can't afford it"
-                  />
+                  <FormattedMessage id="CANT_AFFORD" defaultMessage="can't afford it" />
                 </AlertText>
               )}
             </div>
@@ -270,25 +252,15 @@ export const SplitInvoiceForm = () => {
           <div style={{ textAlign: 'center' }}>
             <p>
               {getLengthOfParticipantsAndRecipient()}{' '}
-              <FormattedMessage
-                id="PARTICIPANTS"
-                defaultMessage="participants"
-              />{' '}
-              <FormattedMessage id="SPLIT" defaultMessage="split" />{' '}
-              <Currency value={amount} />
+              <FormattedMessage id="PARTICIPANTS" defaultMessage="participants" />{' '}
+              <FormattedMessage id="SPLIT" defaultMessage="split" /> <Currency value={amount} />
             </p>
             <div>
-              <FormattedMessage
-                id="SPLIT_PAY_MESSAGE"
-                defaultMessage="everybody has to pay"
-              />{' '}
+              <FormattedMessage id="SPLIT_PAY_MESSAGE" defaultMessage="everybody has to pay" />{' '}
               <Currency value={getSplitAmount()} />
               {recipient && (
                 <>
-                  <FormattedMessage
-                    id="SPLIT_INVOICE_RECIPIENT_NOTE"
-                    defaultMessage=" to "
-                  />
+                  <FormattedMessage id="SPLIT_INVOICE_RECIPIENT_NOTE" defaultMessage=" to " />
                   <UserName name={recipient.name} />
                 </>
               )}

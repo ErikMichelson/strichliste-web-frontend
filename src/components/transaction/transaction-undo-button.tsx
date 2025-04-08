@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useIsTransactionDeletable, store } from '../../store';
-import { startDeletingTransaction } from '../../store/reducers';
 import { Button } from '../../bricks';
+import { store, useIsTransactionDeletable } from '../../store';
+import { startDeletingTransaction } from '../../store/reducers';
 
 interface Props {
   userId?: string;
@@ -28,11 +28,7 @@ export function TransactionUndoButton(props: Props) {
         if (typeof props.onSuccess === 'function') {
           props.onSuccess();
         }
-        startDeletingTransaction(
-          store.dispatch,
-          props.userId || '',
-          props.transactionId
-        );
+        startDeletingTransaction(store.dispatch, props.userId || '', props.transactionId);
       }}
     >
       <FormattedMessage id="USER_TRANSACTION_UNDO" />

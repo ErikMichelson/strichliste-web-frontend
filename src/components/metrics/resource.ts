@@ -4,18 +4,18 @@ import { get, useEffectAsync } from '../../services/api';
 
 const checkNaN = (value: number): number => {
   const maybeNaN = value / 100;
-  return isNaN(maybeNaN) ? 0 : maybeNaN;
+  return Number.isNaN(maybeNaN) ? 0 : maybeNaN;
 };
 
 export const useMetrics = (): FormattedMetric | null => {
   const [metric, setMetrics] = useState<FormattedMetric | null>(null);
 
   useEffectAsync(async () => {
-    const nextMetrics: Metric = await get(`metrics`);
+    const nextMetrics: Metric = await get('metrics');
 
     const formattedMetric = {
       ...nextMetrics,
-      days: nextMetrics.days.map(day => ({
+      days: nextMetrics.days.map((day) => ({
         balance: checkNaN(day.balance),
         charged: checkNaN(day.charged.amount),
         date: day.date,

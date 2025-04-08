@@ -1,12 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
 import styles from './text.module.css';
 
-export const Ellipsis: React.FunctionComponent<{ title?: string }> = ({
-  children,
-  title,
-}) => {
+export const Ellipsis: React.FunctionComponent<{ title?: string }> = ({ children, title }) => {
   const fallbackTitle = typeof children === 'string' ? children : '';
   return (
     <div className={styles.ellipsis} title={title || fallbackTitle}>
@@ -36,13 +33,6 @@ interface LineThroughProps {
   className?: string;
 }
 
-export const LineThrough: React.FC<LineThroughProps> = ({
-  lineThrough,
-  className,
-  ...props
-}) => (
-  <div
-    className={classNames(className, { [styles.lineThrough]: lineThrough })}
-    {...props}
-  />
+export const LineThrough: React.FC<LineThroughProps> = ({ lineThrough, className, ...props }) => (
+  <div className={classNames(className, { [styles.lineThrough]: lineThrough })} {...props} />
 );

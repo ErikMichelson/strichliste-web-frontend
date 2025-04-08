@@ -126,7 +126,7 @@ export async function startLoadingSettings(dispatch: Dispatch): Promise<void> {
     defaultError: 'SETTINGS_LOADED_FAILED',
   });
 
-  if (data && data.settings) {
+  if (data?.settings) {
     dispatch(settingsLoaded(data.settings));
   }
 }
@@ -169,10 +169,7 @@ export const initialState = {
   },
 };
 
-export function settings(
-  state: Settings = initialState,
-  action: Action
-): Settings {
+export function settings(state: Settings = initialState, action: Action): Settings {
   switch (action.type) {
     case SettingsTypes.SettingsLoaded:
       return { ...state, ...action.payload };

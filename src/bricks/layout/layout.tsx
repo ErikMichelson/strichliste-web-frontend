@@ -1,5 +1,5 @@
-import React from 'react';
 import classnames from 'classnames';
+import React from 'react';
 
 import styles from './layout.module.css';
 
@@ -30,7 +30,7 @@ export interface FlexProps {
     | 'stretch';
 }
 
-export const Flex: React.FC<FlexProps> = props => {
+export const Flex: React.FC<FlexProps> = (props) => {
   return (
     <div
       className={styles.flex}
@@ -50,15 +50,8 @@ export const Flex: React.FC<FlexProps> = props => {
   );
 };
 
-export const Separator: React.FC<{ margin?: string; padding?: string }> = ({
-  padding,
-  margin,
-}) => {
-  return (
-    <div
-      style={{ margin, padding, borderTop: 'solid 1px var(--border)' }}
-    ></div>
-  );
+export const Separator: React.FC<{ margin?: string; padding?: string }> = ({ padding, margin }) => {
+  return <div style={{ margin, padding, borderTop: 'solid 1px var(--border)' }} />;
 };
 
 export const GridOneOneTwo: React.FC = ({ children }) => {

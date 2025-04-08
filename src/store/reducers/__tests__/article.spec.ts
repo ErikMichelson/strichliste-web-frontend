@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { DeepPartial } from 'redux';
+import { vi } from 'vitest';
 import { get, post } from '../../../services/api';
 import { getMockStore } from '../../../spec-configs/mock-store';
 import { Action } from '../../action';
@@ -9,10 +10,10 @@ import {
   articlesLoaded,
   getArticle,
   getArticleByBarcode,
+  getArticleHistory,
   getArticleList,
   startAddArticle,
   startLoadingArticles,
-  getArticleHistory,
 } from '../article';
 import { articleDetailResponse } from '../mock';
 
@@ -71,9 +72,7 @@ describe('article reducer', () => {
 describe('action creators', () => {
   describe('startAddArticle', () => {
     it('', async () => {
-      (post as any).mockImplementationOnce(() =>
-        Promise.resolve({ article: { id: 1 } })
-      );
+      (post as any).mockImplementationOnce(() => Promise.resolve({ article: { id: 1 } }));
       const store = getMockStore();
       await startAddArticle(store.dispatch, { id: 1 } as any);
       expect(post).toHaveBeenCalledWith('article', { id: 1 });
@@ -83,9 +82,7 @@ describe('action creators', () => {
 
   describe('getArticleByBarcode', () => {
     it('fetches articles by barcode', async () => {
-      (get as any).mockImplementationOnce(() =>
-        Promise.resolve({ articles: [{ id: 1 }] })
-      );
+      (get as any).mockImplementationOnce(() => Promise.resolve({ articles: [{ id: 1 }] }));
       const store = getMockStore();
       await getArticleByBarcode(store.dispatch, 'asdf');
       expect(get).toHaveBeenCalledWith('article/search?barcode=asdf');
@@ -93,9 +90,7 @@ describe('action creators', () => {
     });
 
     it('throws no articles error if the result list is empty', async () => {
-      (get as any).mockImplementationOnce(() =>
-        Promise.resolve({ articles: [] })
-      );
+      (get as any).mockImplementationOnce(() => Promise.resolve({ articles: [] }));
       const store = getMockStore();
       try {
         await getArticleByBarcode(store.dispatch, 'asdf');
@@ -107,15 +102,11 @@ describe('action creators', () => {
   });
 
   it('startLoadingArticles', async () => {
-    (get as any).mockImplementationOnce(() =>
-      Promise.resolve({ articles: [{ id: 1 }] })
-    );
+    (get as any).mockImplementationOnce(() => Promise.resolve({ articles: [{ id: 1 }] }));
 
     const store = getMockStore();
     await startLoadingArticles(store.dispatch, true);
-    expect(get).toHaveBeenCalledWith(
-      'article?limit=999&active=true&ancestor=false'
-    );
+    expect(get).toHaveBeenCalledWith('article?limit=999&active=true&ancestor=false');
     expect(store.getActions()).toMatchSnapshot();
   });
 });

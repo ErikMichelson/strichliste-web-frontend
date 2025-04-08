@@ -26,12 +26,9 @@ export const en = {
   ARTICLE_ADD_FORM_AMOUNT_LABEL: 'Price:',
   ARTICLE_LOADING_BY_BARCODE: 'fetching article by barcode',
   ARTICLE_FETCHED_BY_BARCODE: 'you just scanned:',
-  ARTICLES_COULD_NOT_BE_LOADED:
-    'Could not load Articles maybe check your internet connection',
-  ARTICLE_COULD_NOT_BE_CREATED:
-    'Could not create the article maybe check your internet connection',
-  ARTICLE_COULD_NOT_BE_LOADED_BY_BARCODE:
-    'Could not load the article by barcode',
+  ARTICLES_COULD_NOT_BE_LOADED: 'Could not load Articles maybe check your internet connection',
+  ARTICLE_COULD_NOT_BE_CREATED: 'Could not create the article maybe check your internet connection',
+  ARTICLE_COULD_NOT_BE_LOADED_BY_BARCODE: 'Could not load the article by barcode',
   TALLY_HEADER: 'Strichliste',
   USERS_LOADING_FAILED:
     'Oops could not load users :-( Maybe check your internet connection and try it again',
@@ -61,8 +58,7 @@ export const en = {
   USER_TRANSACTIONS_TABLE_LOAD_NEXT_ROWS: 'more',
   USER_TRANSACTIONS_RECIPIENT: 'recipient',
   USER_TRANSACTION_CREATE: 'Send money to a friend',
-  USER_TRANSACTION_CREATE_SUBMIT_TITLE:
-    'Submit to send this amount to a friend',
+  USER_TRANSACTION_CREATE_SUBMIT_TITLE: 'Submit to send this amount to a friend',
   USER_TRANSACTION_CREATE_LINK: 'Send money',
   USER_TRANSACTION_CREATE_CUSTOM_HEADLINE: 'Custom transaction',
   USER_TRANSACTION_CREATE_CUSTOM_DEPOSIT_BUTTON: 'Charge wallet',
@@ -83,8 +79,7 @@ export const en = {
   PAYMENT_DEPOSIT_LABEL: 'Charge your wallet',
   PAYMENT_DISPENSE_LABEL: 'What you have to pay',
   BACK_BUTTON: 'back',
-  SETTINGS_LOADED_FAILED:
-    'Could not load settings, falling back to default settings',
+  SETTINGS_LOADED_FAILED: 'Could not load settings, falling back to default settings',
   PAGER_PREV: 'prev',
   PAGER_NEXT: 'next',
   SEARCH: 'Search',

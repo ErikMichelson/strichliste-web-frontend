@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { AcceptButton, AcceptIcon, Arrow, Card, Input } from '../../bricks';
+import { store } from '../../store';
 import { User, startCreatingTransaction } from '../../store/reducers';
 import { Currency, CurrencyInput } from '../currency';
 import { UserSelection } from '../user';
 import { UserName } from '../user/user-name';
 import { TransactionUndoButton } from './transaction-undo-button';
 import { UserToUserValidator } from './user-to-user-validator';
-import { store } from '../../store';
-import { Card, AcceptIcon, AcceptButton, Input, Arrow } from '../../bricks';
 
 import styles from './create-user-transaction-form.module.css';
 
@@ -50,16 +50,12 @@ export class CreateUserTransactionForm extends React.Component<Props, State> {
 
   public createTransaction = async () => {
     if (this.state.selectedUser.id && this.state.selectedAmount) {
-      const res = await startCreatingTransaction(
-        store.dispatch,
-        this.props.match.params.id,
-        {
-          amount: this.state.selectedAmount * -1,
-          recipientId: this.state.selectedUser.id,
-          comment: this.state.comment,
-        }
-      );
-      if (res && res.id) {
+      const res = await startCreatingTransaction(store.dispatch, this.props.match.params.id, {
+        amount: this.state.selectedAmount * -1,
+        recipientId: this.state.selectedUser.id,
+        comment: this.state.comment,
+      });
+      if (res?.id) {
         this.setState({
           hasSelectionReady: true,
           createdTransactionId: res.id,
@@ -111,76 +107,70 @@ export class CreateUserTransactionForm extends React.Component<Props, State> {
           />
         </Card>
       );
-    } else {
-      return (
-        <>
-          <form onSubmit={this.handleSubmit}>
-            <div className={styles.grid}>
-              <FormattedMessage
-                defaultMessage="Amount"
-                id="USER_TRANSACTION_FROM_AMOUNT_LABEL"
-              >
-                {text => (
-                  <CurrencyInput
-                    noNegative
-                    placeholder={text as string}
-                    autoFocus
-                    onChange={value =>
-                      this.setState({
-                        selectedAmount: value,
-                      })
-                    }
-                  />
-                )}
-              </FormattedMessage>
-              <Arrow
-                style={{
-                  width: ' 1rem',
-                  height: '1rem',
-                }}
-              />
-              <FormattedMessage id="CREATE_USER_TO_USER_TRANSACTION_USER">
-                {text => (
-                  <UserSelection
-                    filterUserId={this.props.match.params.id}
-                    placeholder={text as string}
-                    onSelect={this.submitUserId}
-                  />
-                )}
-              </FormattedMessage>
-              <UserToUserValidator
-                value={this.state.selectedAmount}
-                userId={this.props.match.params.id}
-                targetUserId={this.state.selectedUser.id}
-                render={isValid => (
-                  <FormattedMessage id="USER_TRANSACTION_CREATE_SUBMIT_TITLE">
-                    {text => (
-                      <AcceptButton
-                        type="submit"
-                        disabled={!(isValid && this.state.selectedUser.id)}
-                        title={text as string}
-                      />
-                    )}
-                  </FormattedMessage>
-                )}
-              />
-            </div>
-            <FormattedMessage id="CREATE_USER_TO_USER_TRANSACTION_COMMENT">
-              {text => (
-                <Input
-                  value={this.state.comment}
-                  onChange={this.setComment}
+    }
+    return (
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <div className={styles.grid}>
+            <FormattedMessage defaultMessage="Amount" id="USER_TRANSACTION_FROM_AMOUNT_LABEL">
+              {(text) => (
+                <CurrencyInput
+                  noNegative
                   placeholder={text as string}
+                  autoFocus
+                  onChange={(value) =>
+                    this.setState({
+                      selectedAmount: value,
+                    })
+                  }
                 />
               )}
             </FormattedMessage>
-          </form>
-        </>
-      );
-    }
+            <Arrow
+              style={{
+                width: ' 1rem',
+                height: '1rem',
+              }}
+            />
+            <FormattedMessage id="CREATE_USER_TO_USER_TRANSACTION_USER">
+              {(text) => (
+                <UserSelection
+                  filterUserId={this.props.match.params.id}
+                  placeholder={text as string}
+                  onSelect={this.submitUserId}
+                />
+              )}
+            </FormattedMessage>
+            <UserToUserValidator
+              value={this.state.selectedAmount}
+              userId={this.props.match.params.id}
+              targetUserId={this.state.selectedUser.id}
+              render={(isValid) => (
+                <FormattedMessage id="USER_TRANSACTION_CREATE_SUBMIT_TITLE">
+                  {(text) => (
+                    <AcceptButton
+                      type="submit"
+                      disabled={!(isValid && this.state.selectedUser.id)}
+                      title={text as string}
+                    />
+                  )}
+                </FormattedMessage>
+              )}
+            />
+          </div>
+          <FormattedMessage id="CREATE_USER_TO_USER_TRANSACTION_COMMENT">
+            {(text) => (
+              <Input
+                value={this.state.comment}
+                onChange={this.setComment}
+                placeholder={text as string}
+              />
+            )}
+          </FormattedMessage>
+        </form>
+      </>
+    );
   }
 }
 
-export const ConnectedCreateCustomTransactionForm = withRouter(
-  CreateUserTransactionForm
-);
+export const ConnectedCreateCustomTransactionForm = withRouter(CreateUserTransactionForm);

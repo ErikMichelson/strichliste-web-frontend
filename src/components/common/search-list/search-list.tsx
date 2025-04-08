@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Input } from '../../../bricks';
 import { useIntl } from 'react-intl';
+import { Input } from '../../../bricks';
 
 export const useInfiniteScrolling = (
   items: any[],
@@ -16,18 +17,17 @@ export const useInfiniteScrolling = (
   };
   const pageItems = items.slice(0, PAGE_SIZE * page);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const elem = scrollableTarget
       ? document.getElementById(scrollableTarget) || document.body
       : document.body;
     const hasVScroll = elem.scrollHeight > elem.clientHeight;
-    const shouldLoadMoreItemsOnStart =
-      page === 1 && !hasVScroll && pageItems.length < items.length;
+    const shouldLoadMoreItemsOnStart = page === 1 && !hasVScroll && pageItems.length < items.length;
 
     if (shouldLoadMoreItemsOnStart) {
       setPage(page + noScrollBarPageOffset);
     }
-    // eslint-disable-next-line
   }, [items]);
 
   return {
@@ -59,9 +59,7 @@ export const SearchList: SearchListComponent = ({
   useEffect(() => {
     setFilteredItems(
       filter
-        ? items.filter(item =>
-            item.name.toLowerCase().includes(filter.toLowerCase())
-          )
+        ? items.filter((item) => item.name.toLowerCase().includes(filter.toLowerCase()))
         : items
     );
   }, [filter, items]);
@@ -73,7 +71,7 @@ export const SearchList: SearchListComponent = ({
           autoFocus
           placeholder={intl.formatMessage({ id: 'SEARCH' })}
           value={filter}
-          onChange={e => updateFilter(e.target.value)}
+          onChange={(e) => updateFilter(e.target.value)}
         />
       </div>
       <InfiniteList

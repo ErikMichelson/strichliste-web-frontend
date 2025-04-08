@@ -15,7 +15,7 @@ export function UserMultiSelection({
   onSelect,
   validation,
 }: UserMultiSelectionProps): JSX.Element | null {
-  const users = useUserState();
+  const _users = useUserState();
 
-  return <div></div>;
+  return <div />;
 }

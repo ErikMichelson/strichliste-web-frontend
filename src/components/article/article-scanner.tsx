@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import {
-  Article,
-  getArticleByBarcode,
-  startCreatingTransaction,
-} from '../../store/reducers';
+import { useDispatch } from 'react-redux';
+import { AcceptIcon, Flex } from '../../bricks';
+import { Article, getArticleByBarcode, startCreatingTransaction } from '../../store/reducers';
 import { Scanner } from '../common/scanner';
 import { Toast } from '../common/toast';
 import { Currency } from '../currency';
-import { Flex, AcceptIcon } from '../../bricks';
-import { useDispatch } from 'react-redux';
 
 interface Props {
   userId: string;
@@ -31,7 +27,7 @@ export const ArticleScanner = (props: Props) => {
           articleId: article.id,
         });
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage(':(');
     }
   };

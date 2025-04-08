@@ -53,10 +53,7 @@ export function userDetailsLoaded(payload: User): UserDetailsLoadedAction {
   };
 }
 
-export async function startLoadingUserDetails(
-  dispatch: Dispatch,
-  id: string
-): Promise<void> {
+export async function startLoadingUserDetails(dispatch: Dispatch, id: string): Promise<void> {
   const details = await get(`user/${id}`);
   dispatch(userDetailsLoaded(details.user));
 }
@@ -72,19 +69,14 @@ export function usersLoaded(payload: GetUsersResponse): UsersLoadedAction {
   };
 }
 
-export async function startLoadingUsers(
-  dispatch: Dispatch,
-  isActive?: boolean
-): Promise<void> {
+export async function startLoadingUsers(dispatch: Dispatch, isActive?: boolean): Promise<void> {
   const params = new URLSearchParams({
     deleted: 'false',
   });
   if (isActive !== undefined) {
     params.set('active', isActive.toString());
   }
-  const promise = get(
-    `user?${params.toString()}`
-  );
+  const promise = get(`user?${params.toString()}`);
   const data = await errorHandler(dispatch, {
     promise,
     defaultError: 'USERS_LOADING_FAILED',
@@ -109,7 +101,7 @@ export async function startCreatingUser(
     },
   });
 
-  if (data && data.user) {
+  if (data?.user) {
     dispatch(userDetailsLoaded(data.user));
     return data.user;
   }
@@ -134,7 +126,7 @@ export async function startUpdateUser(
       UserAlreadyExistsException: 'USERS_CREATION_FAILED_USER_EXIST',
     },
   });
-  if (data && data.user) {
+  if (data?.user) {
     dispatch(userDetailsLoaded(data.user));
     return data.user;
   }
@@ -142,10 +134,7 @@ export async function startUpdateUser(
   return undefined;
 }
 
-function getUserFromStateOrPayload(
-  state: UsersState,
-  transaction?: Transaction
-): User | undefined {
+function getUserFromStateOrPayload(state: UsersState, transaction?: Transaction): User | undefined {
   if (!transaction) {
     return undefined;
   }
@@ -171,7 +160,7 @@ export function user(state: UsersState = {}, action: Action): UsersState {
         ...state,
         [action.payload.id]: { ...state[action.payload.id], ...action.payload },
       };
-    case TransactionTypes.TransactionsLoaded:
+    case TransactionTypes.TransactionsLoaded: {
       // eslint-disable-next-line no-case-declarations
       const user = getUserFromStateOrPayload(state, action.payload[0]);
       if (!user) {
@@ -181,14 +170,12 @@ export function user(state: UsersState = {}, action: Action): UsersState {
         ...state,
         [user.id]: {
           ...user,
-          transactions: action.payload.reduce(
-            (nextTransactions, transaction) => {
-              return { ...nextTransactions, [transaction.id]: transaction.id };
-            },
-            user.transactions
-          ),
+          transactions: action.payload.reduce((nextTransactions, transaction) => {
+            return { ...nextTransactions, [transaction.id]: transaction.id };
+          }, user.transactions),
         },
       };
+    }
     default:
       return state;
   }
@@ -208,21 +195,18 @@ export function getUser(state: AppState, userId: string): User | undefined {
   return getUserState(state)[userId];
 }
 
-export function getFilteredUserIds(
-  state: AppState,
-  isActive: boolean
-): string[] {
+export function getFilteredUserIds(state: AppState, isActive: boolean): string[] {
   const query = getSearchQuery(state);
   const activeFilteredUsers = getUserArray(state).filter(
-    user => user.isActive === isActive && user.isDisabled === false
+    (user) => user.isActive === isActive && user.isDisabled === false
   );
   if (!query) {
-    activeFilteredUsers.map(user => user.id);
+    activeFilteredUsers.map((user) => user.id);
   }
 
   return activeFilteredUsers
-    .filter(user => user.name.toLowerCase().includes(query.toLowerCase()))
-    .map(user => user.id);
+    .filter((user) => user.name.toLowerCase().includes(query.toLowerCase()))
+    .map((user) => user.id);
 }
 
 export function getUserBalance(state: AppState, userId: string): number {
@@ -230,16 +214,10 @@ export function getUserBalance(state: AppState, userId: string): number {
   return user ? user.balance : 0;
 }
 
-export function getUserTransactionsArray(
-  state: AppState,
-  userId: string
-): number[] {
+export function getUserTransactionsArray(state: AppState, userId: string): number[] {
   const user = getUser(state, userId);
-  if (user && user.transactions) {
-    return Object.values(user.transactions).sort(
-      (a, b) => Number(b) - Number(a)
-    );
-  } else {
-    return [];
+  if (user?.transactions) {
+    return Object.values(user.transactions).sort((a, b) => Number(b) - Number(a));
   }
+  return [];
 }

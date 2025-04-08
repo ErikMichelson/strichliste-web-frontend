@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { User } from '../../store/reducers';
-import { Modal, useModal, Ellipsis } from '../../bricks';
+import { Ellipsis, Modal, useModal } from '../../bricks';
 import { Button } from '../../bricks/button/button';
+import { User } from '../../store/reducers';
 import { UserSearchList } from '../common/search-results';
 
 interface Props {
@@ -32,7 +32,7 @@ export function UserSelection({
     setSelection(user);
     onSelect(user);
     modalProps.handleHide();
-    if (buttonRef && buttonRef.current) {
+    if (buttonRef?.current) {
       buttonRef.current.focus();
     }
   };

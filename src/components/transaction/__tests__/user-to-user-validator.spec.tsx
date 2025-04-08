@@ -1,5 +1,6 @@
-import * as React from 'react';
 import { cleanup } from '@testing-library/react';
+import * as React from 'react';
+import { afterEach, describe, expect, it } from 'vitest';
 import { renderWithContext } from '../../../spec-configs/render';
 
 import { UserToUserValidator } from '../user-to-user-validator';
@@ -10,9 +11,7 @@ describe('UserToUserValidator', () => {
   it('returns true if the user has the money  and the receiver can accept it', () => {
     const { getByTestId } = renderWithContext(
       <UserToUserValidator
-        render={isValid => (
-          <div data-testid="result">{isValid ? 'yes' : 'no'}</div>
-        )}
+        render={(isValid) => <div data-testid="result">{isValid ? 'yes' : 'no'}</div>}
         userId={1}
         targetUserId={2}
         value={100}
@@ -28,9 +27,7 @@ describe('UserToUserValidator', () => {
   it('returns false if the user does not have the money', () => {
     const { getByTestId } = renderWithContext(
       <UserToUserValidator
-        render={isValid => (
-          <div data-testid="result">{isValid ? 'yes' : 'no'}</div>
-        )}
+        render={(isValid) => <div data-testid="result">{isValid ? 'yes' : 'no'}</div>}
         userId={1}
         targetUserId={2}
         value={100}
@@ -45,9 +42,7 @@ describe('UserToUserValidator', () => {
   it('returns false if the receiver can not accept the money', () => {
     const { getByTestId } = renderWithContext(
       <UserToUserValidator
-        render={isValid => (
-          <div data-testid="result">{isValid ? 'yes' : 'no'}</div>
-        )}
+        render={(isValid) => <div data-testid="result">{isValid ? 'yes' : 'no'}</div>}
         userId={1}
         targetUserId={2}
         value={100}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { DeepPartial } from 'redux';
+import { vi } from 'vitest';
 import { TransactionTypes, startCreatingTransaction, transaction } from '..';
 import { Action } from '../..';
 import { get, post, restDelete } from '../../../services/api';

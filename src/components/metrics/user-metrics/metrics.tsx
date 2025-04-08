@@ -1,21 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 
+import { Card, GridOneOneTwo, Separator } from '../../../bricks';
 import { Currency } from '../../currency';
 import { UserRouteProps } from '../../user/user-router';
 import { ArticleMetric, useMetrics } from './resource';
-import { Card, Separator, GridOneOneTwo } from '../../../bricks';
 
 type Props = UserRouteProps;
 
 const TopRatedArticles = (props: { articles: ArticleMetric[] }) => (
   <Card margin="2rem 0">
     <h2>
-      <FormattedMessage
-        id="METRICS_ARTICLES_RATING"
-        defaultMessage="Your top 10 articles!"
-      />
+      <FormattedMessage id="METRICS_ARTICLES_RATING" defaultMessage="Your top 10 articles!" />
     </h2>
     <Separator margin="1rem -1rem 2rem -1rem" />
     <GridOneOneTwo>
@@ -23,17 +20,14 @@ const TopRatedArticles = (props: { articles: ArticleMetric[] }) => (
         <FormattedMessage id="USER_TRANSACTIONS_TABLE_AMOUNT" />
       </div>
       <div>
-        <FormattedMessage
-          id="USER_METRICS_PRICE"
-          defaultMessage="money spend"
-        />
+        <FormattedMessage id="USER_METRICS_PRICE" defaultMessage="money spend" />
       </div>
       <div>
         <FormattedMessage id="USER_METRICS_ARTICLE" defaultMessage="article" />
       </div>
       <div />
     </GridOneOneTwo>
-    {props.articles.slice(0, 10).map(articleMetric => (
+    {props.articles.slice(0, 10).map((articleMetric) => (
       <GridOneOneTwo key={articleMetric.article.id}>
         <div>{articleMetric.count}</div>
         <div>
@@ -55,7 +49,7 @@ const MetricCard = (props: {
   </Card>
 );
 
-export const Metrics: React.FC<Props> = props => {
+export const Metrics: React.FC<Props> = (props) => {
   const metrics = useMetrics(props.match.params.id);
   if (!metrics) {
     return null;
@@ -68,8 +62,7 @@ export const Metrics: React.FC<Props> = props => {
       <GridOneOneTwo>
         <MetricCard title={<FormattedMessage id="USER_TRANSACTIONS" />}>
           <div>
-            <FormattedMessage id="USER_TRANSACTIONS_TABLE_AMOUNT" />:
-            {metrics.transactions.count}
+            <FormattedMessage id="USER_TRANSACTIONS_TABLE_AMOUNT" />:{metrics.transactions.count}
           </div>
           <div>
             <Currency value={metrics.transactions.incoming.amount} />
@@ -80,8 +73,7 @@ export const Metrics: React.FC<Props> = props => {
         </MetricCard>
         <MetricCard title={<FormattedMessage id="ARTICLE_HEADLINE" />}>
           <div>
-            <FormattedMessage id="USER_TRANSACTIONS_TABLE_AMOUNT" />:
-            {metrics.articles.length}
+            <FormattedMessage id="USER_TRANSACTIONS_TABLE_AMOUNT" />:{metrics.articles.length}
           </div>
         </MetricCard>
       </GridOneOneTwo>

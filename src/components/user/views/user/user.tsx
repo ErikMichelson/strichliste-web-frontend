@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
 import { useFilteredUsers } from '../../../../store';
 import { startLoadingUsers } from '../../../../store/reducers';
 import { NavTabMenus } from '../../../common/nav-tab-menu';
-import { CreateUserInlineFormView } from '../../create-user-inline-form';
-import { useDispatch } from 'react-redux';
 import { ScrollToTop } from '../../../common/scroll-to-top';
+import { CreateUserInlineFormView } from '../../create-user-inline-form';
 import { UserList } from '../../user-list';
 
 import styles from './user.module.css';
@@ -32,9 +32,7 @@ export const User = (props: UserProps) => {
       <ScrollToTop />
       <div className={styles.wrapper}>
         <div className={styles.addUserButton}>
-          <CreateUserInlineFormView
-            isActive={props.showCreateUserForm || false}
-          />
+          <CreateUserInlineFormView isActive={props.showCreateUserForm || false} />
         </div>
         <NavTabMenus
           margin="2rem 1rem"

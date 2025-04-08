@@ -1,28 +1,24 @@
 import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import {
+  AlertText,
+  PayPal,
+  ProductIcon,
+  ScrollContainer,
+  ShoppingBagIcon,
+  Tab,
+  TransactionIcon,
+} from '../../bricks';
 import { useSettings } from '../../store';
 import { User } from '../../store/reducers';
 import { Currency } from '../currency';
 import { UserName } from '../user/user-name';
 import { UserDetailRouter } from './user-details-router';
-import {
-  Tab,
-  AlertText,
-  PayPal,
-  TransactionIcon,
-  ShoppingBagIcon,
-  ProductIcon,
-  ScrollContainer,
-} from '../../bricks';
 
 import styles from './user-details-header.module.css';
 
-const toggleTab = (
-  url: string,
-  currentUrl: string,
-  userUrl: string
-): string => {
+const toggleTab = (url: string, currentUrl: string, userUrl: string): string => {
   return url === currentUrl ? userUrl : url;
 };
 
@@ -49,19 +45,12 @@ const Component = ({ user, location }: UserDetailsHeaderProps) => {
         </h3>
       </div>
       <div className={styles.wrapper}>
-        <ScrollContainer
-          style={{ justifyContent: 'space-between', marginBottom: '1rem' }}
-        >
+        <ScrollContainer style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
           <Tab
             activeClassName="active"
-            to={toggleTab(
-              `/user/${user.id}/send_money_to_a_friend`,
-              currentUrl,
-              userUrl
-            )}
+            to={toggleTab(`/user/${user.id}/send_money_to_a_friend`, currentUrl, userUrl)}
           >
-            <TransactionIcon />{' '}
-            <FormattedMessage id="USER_TRANSACTION_CREATE_LINK" />
+            <TransactionIcon /> <FormattedMessage id="USER_TRANSACTION_CREATE_LINK" />
           </Tab>
           {settings.article.enabled && (
             <Tab

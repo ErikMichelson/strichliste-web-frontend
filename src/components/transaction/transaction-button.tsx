@@ -1,10 +1,10 @@
 import * as React from 'react';
 
+import { Button } from '../../bricks';
+import { store } from '../../store';
 import { startCreatingTransaction } from '../../store/reducers';
 import { Currency } from '../currency';
 import { useTransactionValidator } from './validator';
-import { store } from '../../store';
-import { Button } from '../../bricks';
 
 interface Props {
   userId: string;
@@ -13,11 +13,7 @@ interface Props {
 }
 
 export function TransactionButton(props: Props): JSX.Element {
-  const isValid = useTransactionValidator(
-    props.value,
-    props.userId,
-    props.isDeposit
-  );
+  const isValid = useTransactionValidator(props.value, props.userId, props.isDeposit);
 
   return (
     <Button

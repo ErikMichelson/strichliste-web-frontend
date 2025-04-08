@@ -34,8 +34,6 @@ export class Toast extends React.Component<Props, State> {
       return null;
     }
 
-    return (
-      <Card error={this.props.type === 'error'}>{this.props.children}</Card>
-    );
+    return <Card error={this.props.type === 'error'}>{this.props.children}</Card>;
   }
 }

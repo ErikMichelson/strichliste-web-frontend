@@ -55,13 +55,8 @@ export class TransactionTable extends React.Component<Props, State> {
 
   public loadRows = async (): Promise<void> => {
     const { limit, offset } = this.getLimitAndOffset();
-    const res = await startLoadingTransactions(
-      store.dispatch,
-      this.props.userId,
-      offset,
-      limit
-    );
-    if (res && res.transactions && res.count) {
+    const res = await startLoadingTransactions(store.dispatch, this.props.userId, offset, limit);
+    if (res?.transactions && res.count) {
       this.setState({ transactions: res.transactions, itemCount: res.count });
     }
   };
@@ -91,11 +86,7 @@ function TransactionPage(props: { transactions: Transaction[] }): JSX.Element {
   return (
     <>
       {props.transactions.map((transaction, index) => (
-        <TransactionListItem
-          first={index === 0}
-          key={transaction.id}
-          id={String(transaction.id)}
-        />
+        <TransactionListItem first={index === 0} key={transaction.id} id={String(transaction.id)} />
       ))}
     </>
   );

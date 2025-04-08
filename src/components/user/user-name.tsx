@@ -1,6 +1,6 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import { Ellipsis } from '../../bricks';
-import classnames from 'classnames';
 
 import styles from './user-name.module.css';
 

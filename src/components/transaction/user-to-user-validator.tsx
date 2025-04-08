@@ -9,15 +9,7 @@ interface Props {
 }
 
 export function UserToUserValidator(props: Props): JSX.Element | null {
-  const userHasTheMoney = useTransactionValidator(
-    props.value,
-    props.userId,
-    false
-  );
-  const receiverCanAcceptTheMoney = useTransactionValidator(
-    props.value,
-    props.targetUserId,
-    true
-  );
+  const userHasTheMoney = useTransactionValidator(props.value, props.userId, false);
+  const receiverCanAcceptTheMoney = useTransactionValidator(props.value, props.targetUserId, true);
   return <>{props.render(userHasTheMoney && receiverCanAcceptTheMoney)} </>;
 }

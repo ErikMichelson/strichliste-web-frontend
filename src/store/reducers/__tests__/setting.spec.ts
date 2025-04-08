@@ -1,19 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeepPartial } from 'redux';
-import {
-  Settings,
-  getPayment,
-  getSettings,
-  initialState,
-  settings,
-  settingsLoaded,
-} from '..';
+import { vi } from 'vitest';
+import { Settings, getPayment, getSettings, initialState, settings, settingsLoaded } from '..';
 import { Action } from '../..';
 import * as servicesApi from '../../../services/api';
 import { getMockStore } from '../../../spec-configs/mock-store';
 import { AppState } from '../../store';
 import { startLoadingSettings } from '../setting';
-import { vi } from 'vitest';
 
 vi.mock('../../../services/api', () => ({
   get: vi.fn(),

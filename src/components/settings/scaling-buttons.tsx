@@ -9,23 +9,14 @@ export const useScalingState = () => {
   const [scaling, setScaling] = React.useState(initialScaling);
 
   const setScalingToDocument = () => {
-    document.documentElement.style.setProperty(
-      '--baseFontSize',
-      `${scaling}px`
-    );
-    document.documentElement.style.setProperty(
-      '--baseFontSizeLaptop',
-      `${scaling + 2}px`
-    );
-    document.documentElement.style.setProperty(
-      '--baseFontSizeDesktop',
-      `${scaling + 4}px`
-    );
+    document.documentElement.style.setProperty('--baseFontSize', `${scaling}px`);
+    document.documentElement.style.setProperty('--baseFontSizeLaptop', `${scaling + 2}px`);
+    document.documentElement.style.setProperty('--baseFontSizeDesktop', `${scaling + 4}px`);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: required to set scaling
   React.useEffect(() => {
     setScalingToDocument();
-    // eslint-disable-next-line
   }, [scaling]);
 
   React.useEffect(() => {

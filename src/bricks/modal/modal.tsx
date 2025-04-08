@@ -1,19 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import styles from './modal.module.css';
 import { Card } from '..';
+import styles from './modal.module.css';
 
-export const Backdrop: React.FC<{ title: string; onClick(): void }> = ({
-  onClick,
-  title,
-}) => {
+export const Backdrop: React.FC<{ title: string; onClick(): void }> = ({ onClick, title }) => {
   return ReactDom.createPortal(
-    <button
-      className={styles.backdrop}
-      onClick={onClick}
-      title={title}
-    ></button>,
+    <button type="button" className={styles.backdrop} onClick={onClick} title={title} />,
     document.body
   );
 };

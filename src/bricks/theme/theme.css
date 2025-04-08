@@ -35,20 +35,20 @@ html {
   --buttonDefaultFont: #58697d;
   --inset: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14);
   --level1: 0 0 1px rgba(0, 0, 0, 0);
-  --level2: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  --level3: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0 1px 8px 0 rgba(0, 0, 0, 0.12);
-  --level4: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
-    0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --level5: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),
-    0 3px 5px -1px rgba(0, 0, 0, 0.2);
-  --level6: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
-  font-family: 'Inter', sans-serif;
+  --level2: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0
+    rgba(0, 0, 0, 0.12);
+  --level3: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 0
+    rgba(0, 0, 0, 0.12);
+  --level4: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px
+    rgba(0, 0, 0, 0.2);
+  --level5: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px
+    rgba(0, 0, 0, 0.2);
+  --level6: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px
+    rgba(0, 0, 0, 0.2);
+  font-family: "Inter", sans-serif;
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   --border: #59687c;
   --componentBackgroundDark: #1d2832;
   --componentBackgroundLight: #2e3d4d;
@@ -108,12 +108,12 @@ h3 {
 }
 
 button,
-input[type='reset'],
-input[type='button'],
-input[type='submit'],
-input[type='button'],
-input[type='reset'],
-input[type='submit'] {
+input[type="reset"],
+input[type="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
   overflow: visible;
   width: auto;
 }
@@ -210,29 +210,29 @@ textarea {
   background: 0 0;
   line-height: 1;
   font-size: 0.8rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 select[multiple],
 textarea {
   vertical-align: top;
 }
 button,
-input[type='button'],
-input[type='checkbox'],
-input[type='radio'],
-input[type='reset'],
-input[type='submit'],
+input[type="button"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="reset"],
+input[type="submit"],
 select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-input[type='checkbox'],
-input[type='radio'] {
+input[type="checkbox"],
+input[type="radio"] {
   width: 1rem;
   height: 1rem;
 }
-input[type='search'] {
+input[type="search"] {
   -webkit-appearance: textfield;
   -webkit-box-sizing: content-box;
 }
@@ -257,12 +257,9 @@ label {
   display: block;
 }
 
-body {
-}
-
 input {
   padding: 0.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   width: 100%;
   border-radius: 2px;
 }

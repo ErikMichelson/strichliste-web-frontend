@@ -1,9 +1,9 @@
 import * as React from 'react';
 
+import { Card } from '../../bricks';
 import { useSettings } from '../../store';
 import { CreateCustomTransactionForm } from './create-custom-transaction-form';
 import { PaymentButtonList } from './payment-button-steps';
-import { Card } from '../../bricks';
 
 interface Props {
   userId: string;
@@ -14,25 +14,17 @@ export function Payment(props: Props): JSX.Element | null {
   return (
     <Card padding="0.5rem">
       {payment.deposit.enabled && (
-        <PaymentButtonList
-          isDeposit={true}
-          steps={payment.deposit.steps}
-          userId={props.userId}
-        />
+        <PaymentButtonList isDeposit={true} steps={payment.deposit.steps} userId={props.userId} />
       )}
       {payment.deposit.custom || payment.dispense.custom ? (
         <div style={{ margin: '1rem' }}>
           <CreateCustomTransactionForm userId={props.userId} />
         </div>
       ) : (
-        <div style={{ margin: '2rem' }}></div>
+        <div style={{ margin: '2rem' }} />
       )}
       {payment.dispense.enabled && (
-        <PaymentButtonList
-          isDeposit={false}
-          steps={payment.dispense.steps}
-          userId={props.userId}
-        />
+        <PaymentButtonList isDeposit={false} steps={payment.dispense.steps} userId={props.userId} />
       )}
     </Card>
   );

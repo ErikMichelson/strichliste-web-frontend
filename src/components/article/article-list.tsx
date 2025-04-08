@@ -2,18 +2,18 @@ import * as React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { withRouter } from 'react-router';
 
+import { Link } from 'react-router-dom';
 import { useActiveArticles } from '../../store';
-import { startLoadingArticles, Article } from '../../store/reducers';
+import { Article, startLoadingArticles } from '../../store/reducers';
 import { NavTabMenus } from '../common/nav-tab-menu';
 import { SearchList } from '../common/search-list/search-list';
-import { Link } from 'react-router-dom';
-import { getArticleFormRoute } from './article-router';
 import { Currency } from '../currency';
+import { getArticleFormRoute } from './article-router';
 import { ArticleTagFilter } from './article-tag-filter';
 
-import styles from './article-list.module.css';
-import { Button, AddIcon, Flex } from '../../bricks';
 import { useDispatch } from 'react-redux';
+import { AddIcon, Button, Flex } from '../../bricks';
+import styles from './article-list.module.css';
 
 const ArticleListItem: React.FC<{ article: Article }> = ({ article }) => {
   return (
@@ -57,9 +57,7 @@ export const ArticleList: React.FC<{ isActive: boolean }> = ({ isActive }) => {
 
   const filterArticles = () => {
     if (filters.length) {
-      return articles.filter((article) =>
-        article.tags.some(({ tag }) => filters.includes(tag))
-      );
+      return articles.filter((article) => article.tags.some(({ tag }) => filters.includes(tag)));
     }
     return articles;
   };
@@ -87,9 +85,7 @@ export const ArticleList: React.FC<{ isActive: boolean }> = ({ isActive }) => {
       <ArticleTagFilter onFilterChange={handleFilterChange} />
       <SearchList
         items={filterArticles()}
-        renderItem={(article: Article) => (
-          <ArticleListItem key={article.id} article={article} />
-        )}
+        renderItem={(article: Article) => <ArticleListItem key={article.id} article={article} />}
         pageSize={10}
       />
     </div>
